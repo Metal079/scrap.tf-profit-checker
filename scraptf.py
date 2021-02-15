@@ -33,7 +33,7 @@ def OrganizeCardData(cards):
         organizedCards[card].append(cardTitle)
         organizedCards[card].append(cardPrice)
         organizedCards[card].append(cardGameName)
-        organizedCards[card].append(cardImageURL)
+        #organizedCards[card].append(cardImageURL)
         organizedCards.append([])
 
     return organizedCards
@@ -57,5 +57,22 @@ for child in cardHTML.children:
 print("The card list has {} objects".format(len(rawCards)))
 
 cards = OrganizeCardData(rawCards)
+'''
+layout = [[]]
+for card in range(len(cards) - 1):
+    layout[card].append(sg.Multiline(str(cards[card][0]), size=(35, 3)))
+    layout.append([])
+'''
 
-sg.Window(title="scrap.tf scrapper", layout=[[sg.Text(cards[0])]], margins=(100, 50)).read()
+# ------ Column Definition ------ #
+column1 = [[sg.Text('Column 1', background_color='lightblue', justification='center', size=(10, 1))],
+           [sg.Spin(values=('Spin Box 1', '2', '3'), initial_value='Spin Box 1')],
+           [sg.Spin(values=('Spin Box 1', '2', '3'), initial_value='Spin Box 2')],
+           [sg.Spin(values=('Spin Box 1', '2', '3'), initial_value='Spin Box 3')]]
+layout = [
+     [sg.Listbox(values=(cards), size=(150, 20))]]
+
+# Create the Window
+window = sg.Window('Enter a number example', layout)
+event, values = window.read()
+window.close()
