@@ -3,8 +3,9 @@ from bs4 import BeautifulSoup
 import browser_cookie3 as bc
 import requests
 import PySimpleGUI as sg
-import numpy as np
-import string
+import time
+
+time1 = time.time()
 
 def OrganizeCardData(cards):
     organizedCards = [[]]
@@ -35,13 +36,24 @@ def OrganizeCardData(cards):
         organizedCards[card].append(cardGameName)
         #organizedCards[card].append(cardImageURL)
         organizedCards.append([])
-
     return organizedCards
+
+def getKeyPrice():
+    url = "https://steamcommunity.com/market/priceoverview/?appid=440&currency=1&market_hash_name=Mann%20Co.%20Supply%20Crate%20Key"
+    page = requests.get(url, cookies=cookie)
+    soup = BeautifulSoup(page.text, 'html.parser')
+    
+    # Organize price
+    index1 = soup.text.rfind('"lowest_price":"$') + 17
+    index2 = soup.text.rfind('","volume"')
+    keyPrice = soup.text[index1:index2]
+    print(keyPrice)
 
 # get raw data
 s = requests.session()
 url = "https://scrap.tf/cards/36"
 cookie = bc.chrome()
+getKeyPrice()
 page = requests.get(url, cookies=cookie)
 soup = BeautifulSoup(page.text, 'html.parser')
 cardHTML = soup.find(class_='items-container')
@@ -72,7 +84,12 @@ column1 = [[sg.Text('Column 1', background_color='lightblue', justification='cen
 layout = [
      [sg.Listbox(values=(cards), size=(150, 20))]]
 
+
+time2 = time.time()
+
+print("Total time: " + str((time2 - time1)))
+
 # Create the Window
-window = sg.Window('Enter a number example', layout)
-event, values = window.read()
-window.close()
+#window = sg.Window('Enter a number example', layout)
+#event, values = window.read()
+#window.close()
