@@ -1,11 +1,10 @@
 import urllib.request
 from bs4 import BeautifulSoup
 import browser_cookie3 as bc
+from numpy import average
 import requests
 import PySimpleGUI as sg
-import time
-
-time1 = time.time()
+import pandas as pd
 
 def OrganizeCardData(cards):
     organizedCards = [[]]
@@ -23,11 +22,11 @@ def OrganizeCardData(cards):
 
         # Organize Game Name
         index1 = cards[card].rfind('refined&lt;br/&gt;&lt;br/&gt;') + 29
-        index2 = cards[card].rfind('&lt;br/&gt;" data-defindex=')
+        index2 = cards[card].rfind('&lt;br/&gt;" data-defindex=') - 13 # 13 is for 'trading card'
         cardGameName = cards[card][index1:index2]
 
         # Organize Card image
-        index1 = cards[card].rfind('background-image:url(') + 21
+        index1 = cards[card].rfind('background-image:url(') + 21 
         index2 = cards[card].rfind('</div>') - 4
         cardImageURL = cards[card][index1:index2]
 
@@ -36,6 +35,8 @@ def OrganizeCardData(cards):
         organizedCards[card].append(cardGameName)
         #organizedCards[card].append(cardImageURL)
         organizedCards.append([])
+        #print(cardGameName)
+    organizedCards.pop()
     return organizedCards
 
 def getKeyPrice():
@@ -47,13 +48,41 @@ def getKeyPrice():
     index1 = soup.text.rfind('"lowest_price":"$') + 17
     index2 = soup.text.rfind('","volume"')
     keyPrice = soup.text[index1:index2]
-    print(keyPrice)
+    keyPrice = float(keyPrice)
+    return keyPrice
+
+def getCardPrice(cardGame):
+    cardExel = pd.read_csv(r'STC_set_data.csv') # Read csv file with card prices
+
+    try:
+        nameIndex = cardExel.loc[cardExel['Game'] == cardGame].index[0] # Get index of the row where the game is located
+    except:
+        return 0.0
+    cardPrice = cardExel["Card Avg"][nameIndex] # Get the actual price from the correct column using the row index from above
+    return float(cardPrice)
+
+def calculateFee(realPrice):
+    steamTransactionFee = round(realPrice *.05, 2)
+    if steamTransactionFee < 0.01:
+        steamTransactionFee = 0.01
+    gameSpecificFee = round(realPrice *.05, 2)
+    if gameSpecificFee < 0.01:
+        gameSpecificFee = 0.01
+    fee = steamTransactionFee + gameSpecificFee
+    return fee
+
+def calculateProfit(realPrice, fee, refPrice):
+    oneRefBaseline = keyPrice / 51
+    refPrice = oneRefBaseline * refPrice
+    profit = (realPrice - fee) - refPrice
+    return round(profit, 2) 
 
 # get raw data
 s = requests.session()
 url = "https://scrap.tf/cards/36"
 cookie = bc.chrome()
-getKeyPrice()
+keyPrice = getKeyPrice()
+print("Current Key Price: " + str(keyPrice))
 page = requests.get(url, cookies=cookie)
 soup = BeautifulSoup(page.text, 'html.parser')
 cardHTML = soup.find(class_='items-container')
@@ -67,29 +96,30 @@ for child in cardHTML.children:
         rawCards.append(str(child))
 
 print("The card list has {} objects".format(len(rawCards)))
-
 cards = OrganizeCardData(rawCards)
 '''
-layout = [[]]
-for card in range(len(cards) - 1):
-    layout[card].append(sg.Multiline(str(cards[card][0]), size=(35, 3)))
-    layout.append([])
+avgPrice = getCardPrice("Team Fortress 2")
+fee = calculateFee(avgPrice)
+profit = calculateProfit(avgPrice, fee, 0.44)
+
 '''
+for card in cards:
+    try:
+        avgPrice = getCardPrice(card[2])
+    except:
+        break
+    fee = calculateFee(avgPrice)
+    profit = calculateProfit(avgPrice, fee, float(card[1]))
+    card.append(profit)
+    #print(card[0] + ': ' + str(card[2]) + 'cost ' + card[1] + " ref and sells for " + str(avgPrice) + " on steam market, after fees we make " + str(profit) + " Profit")
 
-# ------ Column Definition ------ #
-column1 = [[sg.Text('Column 1', background_color='lightblue', justification='center', size=(10, 1))],
-           [sg.Spin(values=('Spin Box 1', '2', '3'), initial_value='Spin Box 1')],
-           [sg.Spin(values=('Spin Box 1', '2', '3'), initial_value='Spin Box 2')],
-           [sg.Spin(values=('Spin Box 1', '2', '3'), initial_value='Spin Box 3')]]
-layout = [
-     [sg.Listbox(values=(cards), size=(150, 20))]]
+sortedCards = sorted(cards, key = lambda l:l[3])
 
-
-time2 = time.time()
-
-print("Total time: " + str((time2 - time1)))
+for card in sortedCards:
+    print(card)
 
 # Create the Window
 #window = sg.Window('Enter a number example', layout)
 #event, values = window.read()
 #window.close()
+
