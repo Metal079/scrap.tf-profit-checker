@@ -3,7 +3,7 @@ import browser_cookie3 as bc # Used for cookie access
 import requests # Gets webpages
 import PySimpleGUI as sg # GUI
 import pandas as pd # csv file reading
-from selenium import webdriver#
+from selenium import webdriver # Potential use for buying cards from scrap.tf
 
 def OrganizeCardData(cards): # Organizes cards in list in format CARDTITLE, CARDPRICE(in refined), CARDGAMENAME
     organizedCards = [[]]
@@ -61,7 +61,7 @@ def calculateFee(realPrice): # Calculates how much the steam market listing fee 
     steamTransactionFee = round(realPrice *.05, 2)
     if steamTransactionFee < 0.01:
         steamTransactionFee = 0.01
-    gameSpecificFee = round(realPrice *.05, 2)
+    gameSpecificFee = round(realPrice *.1, 2)
     if gameSpecificFee < 0.01:
         gameSpecificFee = 0.01
     fee = steamTransactionFee + gameSpecificFee
