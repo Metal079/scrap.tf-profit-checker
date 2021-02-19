@@ -4,6 +4,7 @@ import requests # Gets webpages
 import PySimpleGUI as sg # GUI
 import pandas as pd # csv file reading
 from selenium import webdriver # Potential use for buying cards from scrap.tf
+import time
 
 def OrganizeCardData(cards): # Organizes cards in list in format CARDTITLE, CARDPRICE(in refined), CARDGAMENAME
     organizedCards = [[]]
@@ -72,6 +73,22 @@ def calculateProfit(realPrice, fee, refPrice): # Estimates the profit based on t
     refPrice = oneRefBaseline * refPrice
     profit = (realPrice - fee) - refPrice
     return round(profit, 2) 
+
+def webDriverTest():
+    options = webdriver.ChromeOptions() 
+    options.add_argument("user-data-dir=C:\\Users\\Pablo\\AppData\\Local\\Google\\Chrome\\User Data\\Default") #Path to your chrome profile
+    w = webdriver.Chrome(executable_path="C:\\WebDriver\\bin\\chromedriver.exe", chrome_options=options)
+
+    driver = w
+    driver.get("https://scrap.tf/cards/36")
+    elem = driver.find_element_by_id('category-0')
+    elem2 = elem.find_element_by_tag_name('div')
+    elem3 = elem2.find_element_by_xpath(".//div[@data-title='Sandbank']")
+
+    print(elem3.get_attribute('innerHTML'))
+    #elem.click()
+webDriverTest()
+exit()
 
 # get raw data of scrap.tf card page
 s = requests.session()
