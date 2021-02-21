@@ -30,9 +30,15 @@ def OrganizeCardData(cards): # Organizes cards in list in format CARDTITLE, CARD
         index2 = cards[card].rfind('</div>') - 4
         cardImageURL = cards[card][index1:index2]
 
+        # Organize Card ID
+        index1 = cards[card].rfind('data-id="') + 9
+        index2 = cards[card].rfind('" data-item-value') 
+        cardID = cards[card][index1:index2]
+
         organizedCards[card].append(cardTitle)
         organizedCards[card].append(cardPrice)
         organizedCards[card].append(cardGameName)
+        organizedCards[card].append(cardID)
         #organizedCards[card].append(cardImageURL)
         organizedCards.append([])
     organizedCards.pop()
@@ -74,22 +80,25 @@ def calculateProfit(realPrice, fee, refPrice): # Estimates the profit based on t
     profit = (realPrice - fee) - refPrice
     return round(profit, 2) 
 
-def webDriverTest():
+def selectCardsScrapTF(): # Opens webpage with selenium and selects all the cards
     options = webdriver.ChromeOptions() 
     options.add_argument("user-data-dir=C:\\Users\\Pablo\\AppData\\Local\\Google\\Chrome\\User Data\\Default") #Path to your chrome profile
-    w = webdriver.Chrome(executable_path="C:\\WebDriver\\bin\\chromedriver.exe", chrome_options=options)
+    w = webdriver.Chrome(executable_path="C:\\WebDriver\\bin\\chromedriver.exe", options=options)
 
     driver = w
     driver.get("https://scrap.tf/cards/36")
     elem = driver.find_element_by_id('category-0')
     elem2 = elem.find_element_by_tag_name('div')
-    elem3 = elem2.find_element_by_xpath(".//div[@data-title='Sandbank']")
+    elem3 = elem.find_element_by_tag_name('div')
 
-    print(elem3.get_attribute('innerHTML'))
-    #elem.click()
-webDriverTest()
-exit()
+    x = 0
+    while(x < 25):
+        x = x + 1
+        cardHtml = elem.find_element_by_xpath("//*[@data-id='" + sortedCards[x][3]  +   "']")
+        driver.execute_script("""arguments[0].setAttribute('class', 'item hoverable quality6 steamCard app753 selected-item')""", cardHtml)
 
+    time.sleep(10000)
+    
 # get raw data of scrap.tf card page
 s = requests.session()
 url = "https://scrap.tf/cards/36"
@@ -119,9 +128,12 @@ for card in cards: # calculate profit
     fee = calculateFee(avgPrice)
     profit = calculateProfit(avgPrice, fee, float(card[1]))
     card.append(profit)
-sortedCards = sorted(cards, key = lambda l:l[3]) # Sorts card list by most profitable
+sortedCards = sorted(cards, key = lambda l:l[4]) # Sorts card list by most profitable
 for card in sortedCards:
     print(card)
+
+sortedCards.reverse()
+selectCardsScrapTF()
 
 # Create the Window
 #window = sg.Window('Enter a number example', layout)
