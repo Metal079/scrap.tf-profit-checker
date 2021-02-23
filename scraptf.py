@@ -97,6 +97,7 @@ def selectCardsScrapTF(): # Opens webpage with selenium and selects all the card
         cardHtml = elem.find_element_by_xpath("//*[@data-id='" + sortedCards[x][3]  +   "']")
         driver.execute_script("""arguments[0].setAttribute('class', 'item hoverable quality6 steamCard app753 selected-item')""", cardHtml)
 
+    print("DONE!")
     time.sleep(10000)
     
 # get raw data of scrap.tf card page
