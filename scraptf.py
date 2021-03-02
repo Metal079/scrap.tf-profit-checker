@@ -16,8 +16,8 @@ def OrganizeCardData(cards): # Organizes cards in list in format CARDTITLE, CARD
         cardTitle = cards[card][index1:index2]
 
         # Organize price
-        index1 = cards[card].rfind('data-content="') + 20
-        index2 = cards[card].rfind(' refined')
+        index1 = cards[card].rfind('data-item-value="') + 17
+        index2 = cards[card].rfind('" data-slot="')
         cardPrice = cards[card][index1:index2]
 
         # Organize Game Name
@@ -74,10 +74,10 @@ def calculateFee(realPrice): # Calculates how much the steam market listing fee 
     fee = steamTransactionFee + gameSpecificFee
     return fee
 
-def calculateProfit(realPrice, fee, refPrice): # Estimates the profit based on the estimated steam market price, current key price, RETURNS profit(float, 2)
-    oneRefBaseline = keyPrice / 51
-    refPrice = oneRefBaseline * refPrice
-    profit = (realPrice - fee) - refPrice
+def calculateProfit(marketCardPrice, fee, cardPriceInScrap): # Estimates the profit based on the estimated steam market price, current key price, RETURNS profit(float, 2)
+    oneScrapRealPrice = (keyPrice / 51) / 9
+    realCardPrice = oneScrapRealPrice * cardPriceInScrap
+    profit = (marketCardPrice - fee) - realCardPrice
     return round(profit, 2) 
 
 def selectCardsScrapTF(): # Opens webpage with selenium and selects all the cards
