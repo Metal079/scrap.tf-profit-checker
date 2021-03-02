@@ -91,13 +91,15 @@ def selectCardsScrapTF(): # Opens webpage with selenium and selects all the card
     elem2 = elem.find_element_by_tag_name('div')
     elem3 = elem.find_element_by_tag_name('div')
 
-    x = 0
-    while(x < 25):
-        x = x + 1
-        cardHtml = elem.find_element_by_xpath("//*[@data-id='" + sortedCards[x][3]  +   "']")
+    # Select the cards using selenium
+    estimatedProfit = 0
+    for card in range(25):
+        cardHtml = elem.find_element_by_xpath("//*[@data-id='" + sortedCards[card][3]  +   "']")
         driver.execute_script("""arguments[0].setAttribute('class', 'item hoverable quality6 steamCard app753 selected-item')""", cardHtml)
+        estimatedProfit += sortedCards[card][4]
 
     print("DONE!")
+    print("Estimated profit: " + str(round(estimatedProfit, 2)))
     time.sleep(10000)
     
 # get raw data of scrap.tf card page
