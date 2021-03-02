@@ -5,6 +5,8 @@ import PySimpleGUI as sg # GUI
 import pandas as pd # csv file reading
 from selenium import webdriver # Potential use for buying cards from scrap.tf
 import time
+from steampy.client import SteamClient
+import multiprocessing
 
 def OrganizeCardData(cards): # Organizes cards in list in format CARDTITLE, CARDPRICE(in refined), CARDGAMENAME
     organizedCards = [[]]
@@ -100,8 +102,20 @@ def selectCardsScrapTF(): # Opens webpage with selenium and selects all the card
 
     print("DONE!")
     print("Estimated profit: " + str(round(estimatedProfit, 2)))
-    time.sleep(10000)
-    
+
+    params = {'key': '7E0353421C674E0ACC5BADB7A74F9272'}
+    while True:
+        TradeOffers =  steam_client.get_trade_offers(True)
+        if TradeOffers['response']['trade_offers_received']:
+            break
+    tradeOfferId = TradeOffers['response']['trade_offers_received'][0]['tradeofferid']
+    time.sleep(5)
+    steam_client.accept_trade_offer(tradeOfferId)
+
+# Login to steam
+steam_client = SteamClient('7E0353421C674E0ACC5BADB7A74F9272')
+steam_client.login('metal079', 'pablo145965', 'Steamguard.txt')
+
 # get raw data of scrap.tf card page
 s = requests.session()
 url = "https://scrap.tf/cards/36"
