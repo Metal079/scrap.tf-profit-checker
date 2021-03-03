@@ -84,10 +84,12 @@ def calculateProfit(marketCardPrice, fee, cardPriceInScrap): # Estimates the pro
 
 def selectCardsScrapTF(): # Opens webpage with selenium and selects all the cards
     options = webdriver.ChromeOptions() 
+    options.add_argument("--start-minimized")
     options.add_argument("user-data-dir=C:\\Users\\Pablo\\AppData\\Local\\Google\\Chrome\\User Data\\Default") #Path to your chrome profile
     w = webdriver.Chrome(executable_path="C:\\WebDriver\\bin\\chromedriver.exe", options=options)
 
     driver = w
+    driver.minimize_window()
     driver.get("https://scrap.tf/cards/36")
     elem = driver.find_element_by_id('category-0')
     elem2 = elem.find_element_by_tag_name('div')
@@ -95,7 +97,9 @@ def selectCardsScrapTF(): # Opens webpage with selenium and selects all the card
 
     # Select the cards using selenium
     estimatedProfit = 0
-    for card in range(25):
+    for card in range(10):
+        if sortedCards[card][4] < 0.05:
+            continue
         cardHtml = elem.find_element_by_xpath("//*[@data-id='" + sortedCards[card][3]  +   "']")
         driver.execute_script("""arguments[0].setAttribute('class', 'item hoverable quality6 steamCard app753 selected-item')""", cardHtml)
         estimatedProfit += sortedCards[card][4]
@@ -117,12 +121,18 @@ def selectCardsScrapTF(): # Opens webpage with selenium and selects all the card
         TradeOffers =  steam_client.get_trade_offers(True)
         if TradeOffers['response']['trade_offers_received']:
             break
-        if waitTime == 12:
+        if waitTime == 30:
             print("Timed out waiting for trade")
             exit()
     tradeOfferId = TradeOffers['response']['trade_offers_received'][0]['tradeofferid']
-    time.sleep(5)
-    steam_client.accept_trade_offer(tradeOfferId)
+    waitTime = 0
+    while waitTime < 36:
+        time.sleep(5)
+        waitTime += 1
+        try:
+            steam_client.accept_trade_offer(tradeOfferId)
+        except:
+            pass
     print("Trade Done!")
 
 # Login to steam
