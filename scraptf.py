@@ -103,14 +103,27 @@ def selectCardsScrapTF(): # Opens webpage with selenium and selects all the card
     print("DONE!")
     print("Estimated profit: " + str(round(estimatedProfit, 2)))
 
+    # Press submit button
+    time.sleep(3)
+    python_button = driver.find_elements_by_xpath("//*[@data-original-title='Pay with metal and keys automatically' and @id='trade-btn']")[0]
+    python_button.click()
+
+    # accept trade
+    waitTime = 0
     params = {'key': '7E0353421C674E0ACC5BADB7A74F9272'}
     while True:
+        time.sleep(10)
+        waitTime += 1
         TradeOffers =  steam_client.get_trade_offers(True)
         if TradeOffers['response']['trade_offers_received']:
             break
+        if waitTime == 12:
+            print("Timed out waiting for trade")
+            exit()
     tradeOfferId = TradeOffers['response']['trade_offers_received'][0]['tradeofferid']
     time.sleep(5)
     steam_client.accept_trade_offer(tradeOfferId)
+    print("Trade Done!")
 
 # Login to steam
 steam_client = SteamClient('7E0353421C674E0ACC5BADB7A74F9272')
