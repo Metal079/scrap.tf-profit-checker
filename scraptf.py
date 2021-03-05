@@ -6,7 +6,8 @@ import pandas as pd # csv file reading
 from selenium import webdriver # Potential use for buying cards from scrap.tf
 import time
 from steampy.client import SteamClient
-import multiprocessing
+import pickle
+
 
 def OrganizeCardData(cards): # Organizes cards in list in format CARDTITLE, CARDPRICE(in refined), CARDGAMENAME
     organizedCards = [[]]
@@ -56,6 +57,7 @@ def getKeyPrice(): # Returns current key price as float based on steam market pr
     index2 = soup.text.rfind('","volume"')
     keyPrice = soup.text[index1:index2]
     keyPrice = float(keyPrice)
+    keyPrice = 2.40
     return keyPrice
 
 def getCardPrice(cardGame, cardExel): # Estimates the card price (in USD) based on the csv file, RETURNS card price in USD (float)
@@ -84,25 +86,40 @@ def calculateProfit(marketCardPrice, fee, cardPriceInScrap): # Estimates the pro
 
 def selectCardsScrapTF(): # Opens webpage with selenium and selects all the cards
     options = webdriver.ChromeOptions() 
-    options.add_argument("--start-minimized")
+    #options.add_argument("--start-minimized")
     options.add_argument("user-data-dir=C:\\Users\\Pablo\\AppData\\Local\\Google\\Chrome\\User Data\\Default") #Path to your chrome profile
+    options.add_argument('--lang=en_US') 
+    options.add_argument("--disable-gpu")
+    #options.add_argument("--no-sandbox")
+    options.headless = True
     w = webdriver.Chrome(executable_path="C:\\WebDriver\\bin\\chromedriver.exe", options=options)
 
     driver = w
     driver.minimize_window()
     driver.get("https://scrap.tf/cards/36")
+    cookies = pickle.load(open("cookies.pkl", "rb"))
+    for cookie in cookies:
+        driver.add_cookie(cookie)
     elem = driver.find_element_by_id('category-0')
     elem2 = elem.find_element_by_tag_name('div')
     elem3 = elem.find_element_by_tag_name('div')
 
     # Select the cards using selenium
     estimatedProfit = 0
+    selectedCards = 0
     for card in range(10):
         if sortedCards[card][4] < 0.05:
             continue
+        selectedCards += 1
         cardHtml = elem.find_element_by_xpath("//*[@data-id='" + sortedCards[card][3]  +   "']")
         driver.execute_script("""arguments[0].setAttribute('class', 'item hoverable quality6 steamCard app753 selected-item')""", cardHtml)
         estimatedProfit += sortedCards[card][4]
+
+    # Check if we selected no cards
+    if(selectedCards == 0):
+        print("Could not find any cards that fufiled min profit")
+        print("Exiting..")
+        exit()
 
     print("DONE!")
     print("Estimated profit: " + str(round(estimatedProfit, 2)))
@@ -111,11 +128,13 @@ def selectCardsScrapTF(): # Opens webpage with selenium and selects all the card
     time.sleep(3)
     python_button = driver.find_elements_by_xpath("//*[@data-original-title='Pay with metal and keys automatically' and @id='trade-btn']")[0]
     python_button.click()
+    print("Pressed submit button")
 
     # accept trade
     waitTime = 0
     params = {'key': '7E0353421C674E0ACC5BADB7A74F9272'}
     while True:
+        print("Waiting on trade...")
         time.sleep(10)
         waitTime += 1
         TradeOffers =  steam_client.get_trade_offers(True)
@@ -127,10 +146,13 @@ def selectCardsScrapTF(): # Opens webpage with selenium and selects all the card
     tradeOfferId = TradeOffers['response']['trade_offers_received'][0]['tradeofferid']
     waitTime = 0
     while waitTime < 36:
+        print("Attempting to accept trade...")
         time.sleep(5)
         waitTime += 1
         try:
-            steam_client.accept_trade_offer(tradeOfferId)
+            response = steam_client.accept_trade_offer(tradeOfferId)
+            print("Accepted Trade!")
+            exit()
         except:
             pass
     print("Trade Done!")
