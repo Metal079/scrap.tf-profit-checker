@@ -14,7 +14,3 @@ RUN dpkg -i google-chrome-stable_current_amd64.deb; apt-get -fy install
 COPY requirements.txt requirements.txt
 RUN pip install -r requirements.txt
 
-# Copy local code to the container image.
-ENV APP_HOME /app
-WORKDIR $APP_HOME
-COPY . .
