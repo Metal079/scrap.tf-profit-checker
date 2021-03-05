@@ -1,7 +1,6 @@
 from bs4 import BeautifulSoup # Used for website scraping
 import browser_cookie3 as bc # Used for cookie access
 import requests # Gets webpages
-import PySimpleGUI as sg # GUI
 import pandas as pd # csv file reading
 from selenium import webdriver # Potential use for buying cards from scrap.tf
 import time
