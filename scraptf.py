@@ -7,7 +7,7 @@ from selenium import webdriver # Potential use for buying cards from scrap.tf
 import time
 from steampy.client import SteamClient
 import pickle
-
+import chromedriver_binary
 
 def OrganizeCardData(cards): # Organizes cards in list in format CARDTITLE, CARDPRICE(in refined), CARDGAMENAME
     organizedCards = [[]]
@@ -49,7 +49,7 @@ def OrganizeCardData(cards): # Organizes cards in list in format CARDTITLE, CARD
 
 def getKeyPrice(): # Returns current key price as float based on steam market price
     url = "https://steamcommunity.com/market/priceoverview/?appid=440&currency=1&market_hash_name=Mann%20Co.%20Supply%20Crate%20Key"
-    page = requests.get(url, cookies=cookie)
+    page = requests.get(url)
     soup = BeautifulSoup(page.text, 'html.parser')
     
     # Organize price
@@ -87,12 +87,12 @@ def calculateProfit(marketCardPrice, fee, cardPriceInScrap): # Estimates the pro
 def selectCardsScrapTF(): # Opens webpage with selenium and selects all the cards
     options = webdriver.ChromeOptions() 
     #options.add_argument("--start-minimized")
-    options.add_argument("user-data-dir=C:\\Users\\Pablo\\AppData\\Local\\Google\\Chrome\\User Data\\Default") #Path to your chrome profile
+    #options.add_argument("user-data-dir=C:\\Users\\Pablo\\AppData\\Local\\Google\\Chrome\\User Data\\Default") #Path to your chrome profile
     options.add_argument('--lang=en_US') 
-    options.add_argument("--disable-gpu")
+    #options.add_argument("--disable-gpu")
     #options.add_argument("--no-sandbox")
-    options.headless = True
-    w = webdriver.Chrome(executable_path="C:\\WebDriver\\bin\\chromedriver.exe", options=options)
+    #options.headless = True
+    w = webdriver.Chrome(options=options)
 
     driver = w
     driver.minimize_window()
@@ -157,18 +157,26 @@ def selectCardsScrapTF(): # Opens webpage with selenium and selects all the card
             pass
     print("Trade Done!")
 
+def save_cookies(requests_cookiejar, filename):
+    with open(filename, 'wb') as f:
+        pickle.dump(requests_cookiejar, f)
+
+def load_cookies(filename):
+    with open(filename, 'rb') as f:
+        return pickle.load(f)
+
 # Login to steam
-steam_client = SteamClient('7E0353421C674E0ACC5BADB7A74F9272')
-steam_client.login('metal079', 'pablo145965', 'Steamguard.txt')
+#steam_client = SteamClient('7E0353421C674E0ACC5BADB7A74F9272')
+#steam_client.login('metal079', 'pablo145965', 'Steamguard.txt')
 
 # get raw data of scrap.tf card page
-s = requests.session()
+session  = requests.session()
 url = "https://scrap.tf/cards/36"
-cookie = bc.chrome()
 keyPrice = getKeyPrice()
 print("Current Key Price: " + str(keyPrice))
-page = requests.get(url, cookies=cookie)
+page = requests.get(url, cookies = load_cookies("request_cookies"))
 soup = BeautifulSoup(page.text, 'html.parser')
+print(soup)
 cardHTML = soup.find(class_='items-container')
 
 # Orginize cards into a string list called cards
