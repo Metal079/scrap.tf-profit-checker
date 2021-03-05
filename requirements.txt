@@ -1,0 +1,9 @@
+# requirements.txt
+
+selenium==3.141.0
+chromedriver-binary==77.0.3865.40.0
+beautifulsoup4==4.9.3
+browser-cookie3==0.12.0
+pandas==1.2.2
+steampy==0.74
+PySimpleGUI==4.34.0
