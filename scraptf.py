@@ -84,21 +84,25 @@ def calculateProfit(marketCardPrice, fee, cardPriceInScrap): # Estimates the pro
     return round(profit, 2) 
 
 def selectCardsScrapTF(): # Opens webpage with selenium and selects all the cards
-    options = webdriver.ChromeOptions() 
-    #options.add_argument("--start-minimized")
-    #options.add_argument("user-data-dir=C:\\Users\\Pablo\\AppData\\Local\\Google\\Chrome\\User Data\\Default") #Path to your chrome profile
-    options.add_argument('--lang=en_US') 
-    #options.add_argument("--disable-gpu")
-    #options.add_argument("--no-sandbox")
-    #options.headless = True
-    w = webdriver.Chrome(options=options)
+    chrome_options  = webdriver.ChromeOptions() 
+    #chrome_options.add_argument("user-data-dir=Default") #Path to your chrome profile
+    #chrome_options.add_argument("user-data-dir=C:\\Users\\Pablo\\AppData\\Local\\Google\\Chrome\\User Data\\Default") #Path to your chrome profile
+    #chrome_options.add_argument("user-data-dir=C:\\Users\\Pablo\\AppData\\Local\\Google\\Chrome\\User Data\\Profile 1") #Path to your chrome profile
+    #chrome_options.add_argument("--user-data-dir=Profile 1")
+    chrome_options.add_argument('--lang=en_US') 
+    chrome_options .add_argument("--disable-gpu")
+    chrome_options .add_argument("--no-sandbox")
+    #chrome_options.headless = True
+    w = webdriver.Chrome(options=chrome_options)
 
     driver = w
-    driver.minimize_window()
-    driver.get("https://scrap.tf/cards/36")
     cookies = pickle.load(open("cookies.pkl", "rb"))
+    driver.get("https://scrap.tf/cards/36")
     for cookie in cookies:
         driver.add_cookie(cookie)
+    driver.get("https://scrap.tf/cards/36")
+    #pickle.dump( driver.get_cookies() , open("cookies.pkl","wb"))
+
     elem = driver.find_element_by_id('category-0')
     elem2 = elem.find_element_by_tag_name('div')
     elem3 = elem.find_element_by_tag_name('div')
@@ -150,10 +154,10 @@ def selectCardsScrapTF(): # Opens webpage with selenium and selects all the card
         waitTime += 1
         try:
             response = steam_client.accept_trade_offer(tradeOfferId)
-            print("Accepted Trade!")
-            exit()
         except:
             pass
+        print("Accepted Trade!")
+        exit()
     print("Trade Done!")
 
 def save_cookies(requests_cookiejar, filename):
