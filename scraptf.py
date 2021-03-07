@@ -92,7 +92,7 @@ def selectCardsScrapTF(): # Opens webpage with selenium and selects all the card
     chrome_options.add_argument('--lang=en_US') 
     chrome_options .add_argument("--disable-gpu")
     chrome_options .add_argument("--no-sandbox")
-    #chrome_options.headless = True
+    chrome_options.headless = True
     w = webdriver.Chrome(options=chrome_options)
 
     driver = w
@@ -169,8 +169,8 @@ def load_cookies(filename):
         return pickle.load(f)
 
 # Login to steam
-#steam_client = SteamClient('7E0353421C674E0ACC5BADB7A74F9272')
-#steam_client.login('metal079', 'pablo145965', 'Steamguard.txt')
+steam_client = SteamClient('7E0353421C674E0ACC5BADB7A74F9272')
+steam_client.login('metal079', 'pablo145965', 'Steamguard.txt')
 
 # get raw data of scrap.tf card page
 session  = requests.session()
