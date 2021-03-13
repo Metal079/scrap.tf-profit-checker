@@ -55,7 +55,7 @@ def getKeyPrice(): # Returns current key price as float based on steam market pr
     index1 = soup.text.rfind('"lowest_price":"$') + 17
     index2 = soup.text.rfind('","volume"')
     keyPrice = soup.text[index1:index2]
-    keyPrice = float(keyPrice)
+    #keyPrice = float(keyPrice)
     keyPrice = 2.40
     return keyPrice
 
@@ -83,6 +83,21 @@ def calculateProfit(marketCardPrice, fee, cardPriceInScrap): # Estimates the pro
     profit = (marketCardPrice - fee) - realCardPrice
     return round(profit, 2) 
 
+def getCardVolume(card, cardExel):
+    baseurl = "https://steamcommunity.com/market/search/render/?query=MEDIC&appid="
+    appid = "753&start=0&count=100&norender=1"
+    url = baseurl + appid
+    page = requests.get(url)
+    soup = BeautifulSoup(page.text, 'html.parser')
+
+    # Organize price
+    index1 = soup.text.rfind('"lowest_price":"$') + 17
+    index2 = soup.text.rfind('","volume"')
+    keyPrice = soup.text[index1:index2]
+    #keyPrice = float(keyPrice)
+    keyPrice = 2.40
+    return keyPrice
+
 def selectCardsScrapTF(): # Opens webpage with selenium and selects all the cards
     chrome_options  = webdriver.ChromeOptions() 
     #chrome_options.add_argument("user-data-dir=Default") #Path to your chrome profile
@@ -96,7 +111,7 @@ def selectCardsScrapTF(): # Opens webpage with selenium and selects all the card
     w = webdriver.Chrome(options=chrome_options)
 
     driver = w
-    cookies = pickle.load(open("cookies.pkl", "rb"))
+    cookies = pickle.load(open("/home/ubuntu/scrap.tf-profit-checker/cookies.pkl", "rb"))
     driver.get("https://scrap.tf/cards/36")
     for cookie in cookies:
         driver.add_cookie(cookie)
@@ -110,7 +125,7 @@ def selectCardsScrapTF(): # Opens webpage with selenium and selects all the card
     # Select the cards using selenium
     estimatedProfit = 0
     selectedCards = 0
-    for card in range(10):
+    for card in range(25):
         if sortedCards[card][4] < 0.05:
             continue
         selectedCards += 1
@@ -133,32 +148,56 @@ def selectCardsScrapTF(): # Opens webpage with selenium and selects all the card
     python_button.click()
     print("Pressed submit button")
 
+    # Login to steam
+    steam_client = SteamClient('7E0353421C674E0ACC5BADB7A74F9272')
+    steam_client.login('metal079', 'pablo145965', '/home/ubuntu/scrap.tf-profit-checker/Steamguard.txt')
+
     # accept trade
     waitTime = 0
     params = {'key': '7E0353421C674E0ACC5BADB7A74F9272'}
     while True:
         print("Waiting on trade...")
-        time.sleep(10)
+        time.sleep(30)
         waitTime += 1
+        if steam_client.is_session_alive() == False:
+            steam_client.login('metal079', 'pablo145965', '/home/ubuntu/scrap.tf-profit-checker/Steamguard.txt')
         TradeOffers =  steam_client.get_trade_offers(True)
         if TradeOffers['response']['trade_offers_received']:
-            break
-        if waitTime == 30:
+            tradeOfferId = TradeOffers['response']['trade_offers_received'][0]['tradeofferid']
+            print("Attempting to accept trade...")
+            try:
+                response = steam_client.accept_trade_offer(tradeOfferId)
+                print("Accepted Trade!")
+                break
+            except:
+                pass
+        if waitTime == 10:
             print("Timed out waiting for trade")
             exit()
-    tradeOfferId = TradeOffers['response']['trade_offers_received'][0]['tradeofferid']
-    waitTime = 0
-    while waitTime < 36:
-        print("Attempting to accept trade...")
-        time.sleep(5)
-        waitTime += 1
-        try:
-            response = steam_client.accept_trade_offer(tradeOfferId)
-        except:
-            pass
-        print("Accepted Trade!")
-        exit()
     print("Trade Done!")
+
+def getAppID(cardGame, cardExel):
+    try:
+        nameIndex = cardExel.loc[cardExel['Game'] == cardGame].index[0] # Get index of the row where the game is located
+    except:
+        return 0.0
+    appID = cardExel["App Id"][nameIndex] # Get the appId
+    return appID
+
+def getSpecificPrice(appID):
+    URL_base = "https://www.steamcardexchange.net/index.php?gamepage-appid-"
+    URL_full = URL_base + appID
+    page = requests.get(URL_full)
+    soup = BeautifulSoup(page.text, 'html.parser')
+
+    # Organize price
+    index1 = soup.text.rfind('"lowest_price":"$') + 17
+    index2 = soup.text.rfind('","volume"')
+    keyPrice = soup.text[index1:index2]
+    #keyPrice = float(keyPrice)
+    keyPrice = 2.40
+    return keyPrice
+
 
 def save_cookies(requests_cookiejar, filename):
     with open(filename, 'wb') as f:
@@ -168,34 +207,35 @@ def load_cookies(filename):
     with open(filename, 'rb') as f:
         return pickle.load(f)
 
-# Login to steam
-steam_client = SteamClient('7E0353421C674E0ACC5BADB7A74F9272')
-steam_client.login('metal079', 'pablo145965', 'Steamguard.txt')
-
 # get raw data of scrap.tf card page
 session  = requests.session()
 url = "https://scrap.tf/cards/36"
 keyPrice = getKeyPrice()
 print("Current Key Price: " + str(keyPrice))
-page = requests.get(url, cookies = load_cookies("request_cookies"))
+page = requests.get(url, cookies = load_cookies("/home/ubuntu/scrap.tf-profit-checker/request_cookies"))
 soup = BeautifulSoup(page.text, 'html.parser')
-print(soup)
 cardHTML = soup.find(class_='items-container')
 
 # Orginize cards into a string list called cards
 rawCards = []
-for child in cardHTML.children:
-    if child == '\n':
-        pass
-    else:
-        rawCards.append(str(child))
+for i in range(0, 10):
+    try:
+        for child in cardHTML.children:
+            if child == '\n':
+                pass
+            else:
+                rawCards.append(str(child))
+    except:
+        continue
+    break
 print("The card list has {} objects".format(len(rawCards)))
 cards = OrganizeCardData(rawCards)
 
-cardExel = pd.read_csv(r'STC_set_data.csv') # Read csv file with card prices
+cardExel = pd.read_csv(r'/home/ubuntu/scrap.tf-profit-checker/STC_set_data.csv') # Read csv file with card prices
 for card in cards: # calculate profit
     try:
         avgPrice = getCardPrice(card[2], cardExel)
+        #marketinfo = getCardVolume(card, cardExel)
     except:
         break
     fee = calculateFee(avgPrice)
