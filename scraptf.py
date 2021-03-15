@@ -1,3 +1,4 @@
+from os import wait
 from bs4 import BeautifulSoup # Used for website scraping
 import browser_cookie3 as bc # Used for cookie access
 import requests # Gets webpages
@@ -107,6 +108,11 @@ def selectCardsScrapTF(): # Opens webpage with selenium and selects all the card
     chrome_options.add_argument('--lang=en_US') 
     chrome_options .add_argument("--disable-gpu")
     chrome_options .add_argument("--no-sandbox")
+    chrome_options.add_argument('--log-level=0')
+    chrome_options.add_argument('--enable-logging')
+    chrome_options.add_argument('--single-process')
+    chrome_options.add_argument('--ignore-certificate-errors')
+    chrome_options.add_argument('--window-size=1280x1696')
     chrome_options.headless = True
     w = webdriver.Chrome(options=chrome_options)
 
@@ -142,15 +148,21 @@ def selectCardsScrapTF(): # Opens webpage with selenium and selects all the card
     print("DONE!")
     print("Estimated profit: " + str(round(estimatedProfit, 2)))
 
+    # Login to steam if needed
+    if steam_client.is_session_alive() == False:
+        for i in range(0,3):
+            try:
+                steam_client.login('metal079', 'pablo145965', '/home/ubuntu/scrap.tf-profit-checker/Steamguard.txt')
+            except:
+                time.sleep(60)
+                continue
+            break
+
     # Press submit button
     time.sleep(3)
     python_button = driver.find_elements_by_xpath("//*[@data-original-title='Pay with metal and keys automatically' and @id='trade-btn']")[0]
     python_button.click()
     print("Pressed submit button")
-
-    # Login to steam
-    steam_client = SteamClient('7E0353421C674E0ACC5BADB7A74F9272')
-    steam_client.login('metal079', 'pablo145965', '/home/ubuntu/scrap.tf-profit-checker/Steamguard.txt')
 
     # accept trade
     waitTime = 0
@@ -173,8 +185,9 @@ def selectCardsScrapTF(): # Opens webpage with selenium and selects all the card
                 pass
         if waitTime == 10:
             print("Timed out waiting for trade")
-            exit()
-    print("Trade Done!")
+            break
+    driver.quit()
+
 
 def getAppID(cardGame, cardExel):
     try:
@@ -207,49 +220,50 @@ def load_cookies(filename):
     with open(filename, 'rb') as f:
         return pickle.load(f)
 
-# get raw data of scrap.tf card page
-session  = requests.session()
-url = "https://scrap.tf/cards/36"
-keyPrice = getKeyPrice()
-print("Current Key Price: " + str(keyPrice))
-page = requests.get(url, cookies = load_cookies("/home/ubuntu/scrap.tf-profit-checker/request_cookies"))
-soup = BeautifulSoup(page.text, 'html.parser')
-cardHTML = soup.find(class_='items-container')
 
-# Orginize cards into a string list called cards
-rawCards = []
-for i in range(0, 10):
-    try:
-        for child in cardHTML.children:
-            if child == '\n':
-                pass
-            else:
-                rawCards.append(str(child))
-    except:
-        continue
-    break
-print("The card list has {} objects".format(len(rawCards)))
-cards = OrganizeCardData(rawCards)
+steam_client = SteamClient('7E0353421C674E0ACC5BADB7A74F9272')
+steam_client.login('metal079', 'pablo145965', '/home/ubuntu/scrap.tf-profit-checker/Steamguard.txt')
+while(True):
+    # get raw data of scrap.tf card page
+    session  = requests.session()
+    url = "https://scrap.tf/cards/36"
+    keyPrice = getKeyPrice()
+    print("Current Key Price: " + str(keyPrice))
 
-cardExel = pd.read_csv(r'/home/ubuntu/scrap.tf-profit-checker/STC_set_data.csv') # Read csv file with card prices
-for card in cards: # calculate profit
-    try:
-        avgPrice = getCardPrice(card[2], cardExel)
-        #marketinfo = getCardVolume(card, cardExel)
-    except:
+    # Organize cards into a string list called cards
+    rawCards = []
+    for i in range(0, 10):
+        page = requests.get(url, cookies = load_cookies("/home/ubuntu/scrap.tf-profit-checker/request_cookies"))
+        soup = BeautifulSoup(page.text, 'html.parser')
+        cardHTML = soup.find(class_='items-container')
+        try:
+            for child in cardHTML.children:
+                if child == '\n':
+                    pass
+                else:
+                    rawCards.append(str(child))
+        except:
+            continue
         break
-    fee = calculateFee(avgPrice)
-    profit = calculateProfit(avgPrice, fee, float(card[1]))
-    card.append(profit)
-sortedCards = sorted(cards, key = lambda l:l[4]) # Sorts card list by most profitable
-for card in sortedCards:
-    print(card)
+    print("The card list has {} objects".format(len(rawCards)))
+    cards = OrganizeCardData(rawCards)
 
-sortedCards.reverse()
-selectCardsScrapTF()
+    cardExel = pd.read_csv(r'/home/ubuntu/scrap.tf-profit-checker/STC_set_data.csv') # Read csv file with card prices
+    for card in cards: # calculate profit
+        try:
+            avgPrice = getCardPrice(card[2], cardExel)
+            #marketinfo = getCardVolume(card, cardExel)
+        except:
+            break
+        fee = calculateFee(avgPrice)
+        profit = calculateProfit(avgPrice, fee, float(card[1]))
+        card.append(profit)
+    sortedCards = sorted(cards, key = lambda l:l[4]) # Sorts card list by most profitable
 
-# Create the Window
-#window = sg.Window('Enter a number example', layout)
-#event, values = window.read()
-#window.close()
+    sortedCards.reverse()
+    for card in range(0,25):
+        print(sortedCards[card])
 
+    selectCardsScrapTF()
+    print("Done with cycle!\n")
+    time.sleep(1200)
