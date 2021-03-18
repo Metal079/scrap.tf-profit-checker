@@ -8,6 +8,7 @@ import time
 from steampy.client import SteamClient
 import pickle
 import chromedriver_binary
+import urllib.parse
 
 def OrganizeCardData(cards): # Organizes cards in list in format CARDTITLE, CARDPRICE(in refined), CARDGAMENAME
     organizedCards = [[]]
@@ -100,6 +101,15 @@ def getCardVolume(card, cardExel):
     return keyPrice
 
 def selectCardsScrapTF(): # Opens webpage with selenium and selects all the cards
+    x = 0
+    top20 = []
+    for index, card in enumerate(mostProfitable):
+        if index > 20:
+            break
+        else:
+            top20.append(card)
+            x += 1
+
     chrome_options  = webdriver.ChromeOptions() 
     #chrome_options.add_argument("user-data-dir=Default") #Path to your chrome profile
     #chrome_options.add_argument("user-data-dir=C:\\Users\\Pablo\\AppData\\Local\\Google\\Chrome\\User Data\\Default") #Path to your chrome profile
@@ -125,27 +135,31 @@ def selectCardsScrapTF(): # Opens webpage with selenium and selects all the card
     #pickle.dump( driver.get_cookies() , open("cookies.pkl","wb"))
 
     elem = driver.find_element_by_id('category-0')
-    elem2 = elem.find_element_by_tag_name('div')
-    elem3 = elem.find_element_by_tag_name('div')
 
     # Select the cards using selenium
     estimatedProfit = 0
     selectedCards = 0
-    for card in range(25):
-        if sortedCards[card][4] < 0.05:
+    for card in top20:
+        if card[4] < 0.03:
             continue
+        try:
+            cardHtml = elem.find_element_by_xpath("//*[@data-id='" + card[3]  +   "']")
+        except:
+            continue
+        print(card)
         selectedCards += 1
-        cardHtml = elem.find_element_by_xpath("//*[@data-id='" + sortedCards[card][3]  +   "']")
         driver.execute_script("""arguments[0].setAttribute('class', 'item hoverable quality6 steamCard app753 selected-item')""", cardHtml)
-        estimatedProfit += sortedCards[card][4]
+        estimatedProfit += card[4]
 
     # Check if we selected no cards
     if(selectedCards == 0):
         print("Could not find any cards that fufiled min profit")
         print("Exiting..")
-        exit()
+        return None
 
-    print("DONE!")
+    t = time.localtime()
+    current_time = time.strftime("%D:%H:%M:%S", t)
+    print("DONE!: " + current_time)
     print("Estimated profit: " + str(round(estimatedProfit, 2)))
 
     # Login to steam if needed
@@ -188,29 +202,40 @@ def selectCardsScrapTF(): # Opens webpage with selenium and selects all the card
             break
     driver.quit()
 
-
 def getAppID(cardGame, cardExel):
     try:
         nameIndex = cardExel.loc[cardExel['Game'] == cardGame].index[0] # Get index of the row where the game is located
     except:
-        return 0.0
-    appID = cardExel["App Id"][nameIndex] # Get the appId
-    return appID
+        return None
+    appID = cardExel["AppId"][nameIndex] # Get the appId
+    return str(appID)
 
-def getSpecificPrice(appID):
-    URL_base = "https://www.steamcardexchange.net/index.php?gamepage-appid-"
-    URL_full = URL_base + appID
-    page = requests.get(URL_full)
-    soup = BeautifulSoup(page.text, 'html.parser')
+def getSpecificPrice(cardName, appID, soup):
+    if appID == None:
+        return 0.0
+    try:
+        cardName = urllib.parse.quote(cardName)
+    except:
+        pass
+
+    if soup == None:
+        URL_base = "https://www.steamcardexchange.net/index.php?gamepage-appid-"
+        URL_full = URL_base + appID
+        page = requests.get(URL_full)
+        soup = BeautifulSoup(page.text, 'html.parser')
+    mydivs = soup.find_all("div", {"class": "element-button"})
 
     # Organize price
-    index1 = soup.text.rfind('"lowest_price":"$') + 17
-    index2 = soup.text.rfind('","volume"')
-    keyPrice = soup.text[index1:index2]
-    #keyPrice = float(keyPrice)
-    keyPrice = 2.40
-    return keyPrice
-
+    price = 0
+    for thing in mydivs:
+        if thing.contents[0].attrs['href'].rfind(cardName) == -1:
+            continue
+        else:
+            price = thing.text
+            index = price.rfind('Price:') + 8
+            price = price[index:]
+            break
+    return float(price)
 
 def save_cookies(requests_cookiejar, filename):
     with open(filename, 'wb') as f:
@@ -219,7 +244,6 @@ def save_cookies(requests_cookiejar, filename):
 def load_cookies(filename):
     with open(filename, 'rb') as f:
         return pickle.load(f)
-
 
 steam_client = SteamClient('7E0353421C674E0ACC5BADB7A74F9272')
 steam_client.login('metal079', 'pablo145965', '/home/ubuntu/scrap.tf-profit-checker/Steamguard.txt')
@@ -249,10 +273,19 @@ while(True):
     cards = OrganizeCardData(rawCards)
 
     cardExel = pd.read_csv(r'/home/ubuntu/scrap.tf-profit-checker/STC_set_data.csv') # Read csv file with card prices
-    for card in cards: # calculate profit
+    soup = None
+    for index, card in enumerate(cards): # calculate profit
         try:
             avgPrice = getCardPrice(card[2], cardExel)
-            #marketinfo = getCardVolume(card, cardExel)
+            '''
+            appID = getAppID(card[2], cardExel)
+            if index > 1 and cards[index][2] != cards[index - 1][2] and appID != None:
+                URL_base = "https://www.steamcardexchange.net/index.php?gamepage-appid-"
+                URL_full = URL_base + appID
+                page = requests.get(URL_full)
+                soup = BeautifulSoup(page.text, 'html.parser')
+            avgPrice = getSpecificPrice(card[0], appID, soup)
+            '''
         except:
             break
         fee = calculateFee(avgPrice)
@@ -261,9 +294,29 @@ while(True):
     sortedCards = sorted(cards, key = lambda l:l[4]) # Sorts card list by most profitable
 
     sortedCards.reverse()
-    for card in range(0,25):
-        print(sortedCards[card])
+    mostProfitable = []
+    for index in range(0,30):
+        try:
+            appID = getAppID(sortedCards[index][2], cardExel)
+            if index > 1 and sortedCards[index][2] != sortedCards[index - 1][2] and appID != None:
+                URL_base = "https://www.steamcardexchange.net/index.php?gamepage-appid-"
+                URL_full = URL_base + appID
+                page = requests.get(URL_full)
+                soup = BeautifulSoup(page.text, 'html.parser')
+            avgPrice = getSpecificPrice(sortedCards[index][0], appID, soup)
+        except:
+            break
+        fee = calculateFee(avgPrice)
+        profit = calculateProfit(avgPrice, fee, float(card[1]))
 
+        mostProfitable.append(sortedCards[index])
+        mostProfitable[index][4] = profit
+    mostProfitable = sorted(mostProfitable, key = lambda l:l[4]) # Sorts card list by most profitable
+    
+    #for index, card in enumerate(mostProfitable):
+        #print(str(index) + ': ' + str(card))
+
+    mostProfitable.reverse()
     selectCardsScrapTF()
     print("Done with cycle!\n")
     time.sleep(1200)
