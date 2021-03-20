@@ -49,16 +49,16 @@ def OrganizeCardData(cards): # Organizes cards in list in format CARDTITLE, CARD
     return organizedCards
 
 def getKeyPrice(): # Returns current key price as float based on steam market price
-    url = "https://steamcommunity.com/market/priceoverview/?appid=440&currency=1&market_hash_name=Mann%20Co.%20Supply%20Crate%20Key"
-    page = requests.get(url)
-    soup = BeautifulSoup(page.text, 'html.parser')
+    #url = "https://steamcommunity.com/market/priceoverview/?appid=440&currency=1&market_hash_name=Mann%20Co.%20Supply%20Crate%20Key"
+    #page = requests.get(url)
+    #soup = BeautifulSoup(page.text, 'html.parser')
     
     # Organize price
-    index1 = soup.text.rfind('"lowest_price":"$') + 17
-    index2 = soup.text.rfind('","volume"')
-    keyPrice = soup.text[index1:index2]
+    #index1 = soup.text.rfind('"lowest_price":"$') + 17
+    #index2 = soup.text.rfind('","volume"')
+    #keyPrice = soup.text[index1:index2]
     #keyPrice = float(keyPrice)
-    keyPrice = 2.40
+    keyPrice = 2.50
     return keyPrice
 
 def getCardPrice(cardGame, cardExel): # Estimates the card price (in USD) based on the csv file, RETURNS card price in USD (float)
@@ -134,7 +134,11 @@ def selectCardsScrapTF(): # Opens webpage with selenium and selects all the card
     driver.get("https://scrap.tf/cards/36")
     #pickle.dump( driver.get_cookies() , open("cookies.pkl","wb"))
 
-    elem = driver.find_element_by_id('category-0')
+    try:
+        elem = driver.find_element_by_id('category-0')
+    except:
+        print("driver.find_element_by_id('category-0') ERROR, Will skip this loop")
+        return None
 
     # Select the cards using selenium
     estimatedProfit = 0
