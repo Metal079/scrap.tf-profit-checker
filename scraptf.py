@@ -12,7 +12,7 @@ import urllib.parse
 import chromedriver_binary
 from concurrent.futures import as_completed
 from concurrent.futures import ThreadPoolExecutor
-from requests_futures.sessions import FuturesSession
+#from requests_futures.sessions import FuturesSession
 import cfscrape
 
 def OrganizeCardData(cards): # Organizes cards in list in format CARDTITLE, CARDPRICE(in refined), CARDGAMENAME
@@ -85,7 +85,7 @@ def calculateFee(realPrice): # Calculates how much the steam market listing fee 
     return fee
 
 def calculateProfit(marketCardPrice, fee, cardPriceInScrap): # Estimates the profit based on the estimated steam market price, current key price, RETURNS profit(float, 2)
-    oneScrapRealPrice = (keyPrice / 52) / 9
+    oneScrapRealPrice = (keyPrice / 55) / 9
     realCardPrice = oneScrapRealPrice * cardPriceInScrap
     profit = (marketCardPrice - fee) - realCardPrice
     return round(profit, 2) 
@@ -134,8 +134,8 @@ def selectCardsScrapTF(): # Opens webpage with selenium and selects all the card
     driver = webdriver.Chrome(options=chrome_options)
 
     # Load page and cookies
-    cookies = pickle.load(open("/home/ubuntu/scrap.tf-profit-checker/cookies.pkl", "rb"))
-    driver.get("https://scrap.tf/cards/36")
+    cookies = load_cookies("/home/pablo/scrap.tf-profit-checker/request_cookies")
+    driver.get("https://scrap.tf/")
     for cookie in cookies:
         driver.add_cookie(cookie)
     driver.get("https://scrap.tf/cards/36")
@@ -178,7 +178,7 @@ def selectCardsScrapTF(): # Opens webpage with selenium and selects all the card
     # Login to steam if needed
     if steam_client.is_session_alive() == False:
         try:
-            steam_client.login('metal079', 'pablo145965', '/home/ubuntu/scrap.tf-profit-checker/Steamguard.txt')
+            steam_client.login('metal079', 'pablo145965', '/home/pablo/scrap.tf-profit-checker/Steamguard.txt')
         except:
             print("TOO MANY LOGINS, will cooldown a bit")
             time.sleep(3600)
@@ -199,7 +199,7 @@ def selectCardsScrapTF(): # Opens webpage with selenium and selects all the card
         waitTime += 1
         if steam_client.is_session_alive() == False:
             try:
-                steam_client.login('metal079', 'pablo145965', '/home/ubuntu/scrap.tf-profit-checker/Steamguard.txt')
+                steam_client.login('metal079', 'pablo145965', '/home/pablo/scrap.tf-profit-checker/Steamguard.txt')
             except:
                 print("TOO MANY LOGINS, will cooldown a bit")
                 time.sleep(3600)
@@ -220,7 +220,7 @@ def selectCardsScrapTF(): # Opens webpage with selenium and selects all the card
                 pass
         if waitTime == 15:
             print("Timed out waiting for trade")
-            break
+            return 0.0
     driver.quit()
     return estimatedProfit
 
@@ -268,8 +268,8 @@ def load_cookies(filename):
         return pickle.load(f)
 
 
-#steam_client = SteamClient('7E0353421C674E0ACC5BADB7A74F9272')
-#steam_client.login('metal079', 'pablo145965', '/home/ubuntu/scrap.tf-profit-checker/Steamguard.txt')
+steam_client = SteamClient('7E0353421C674E0ACC5BADB7A74F9272')
+steam_client.login('metal079', 'pablo145965', '/home/pablo/scrap.tf-profit-checker/Steamguard.txt')
 total_profit = 0.0
 while(True):
     # get raw data of scrap.tf card page
@@ -282,7 +282,7 @@ while(True):
     scraper = cfscrape.create_scraper() 
     rawCards = []
     for i in range(0, 10):
-        page = scraper.get(url, cookies = load_cookies("/home/ubuntu/scrap.tf-profit-checker/request_cookies"))
+        page = scraper.get(url, cookies = load_cookies("/home/pablo/scrap.tf-profit-checker/request_cookies"))
         soup = BeautifulSoup(page.text, 'html.parser')
         cardHTML = soup.find(class_='items-container')
         try:
@@ -297,7 +297,7 @@ while(True):
     print("The card list has {} objects".format(len(rawCards)))
     cards = OrganizeCardData(rawCards)
 
-    cardExel = pd.read_csv(r'/home/ubuntu/scrap.tf-profit-checker/STC_set_data.csv') # Read csv file with card prices
+    cardExel = pd.read_csv(r'/home/pablo/scrap.tf-profit-checker/STC_set_data.csv') # Read csv file with card prices
     soup = None
     for index, card in enumerate(cards): # calculate profit
         try:
