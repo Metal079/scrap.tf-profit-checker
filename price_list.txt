@@ -1,0 +1,1084 @@
+{PRICE;CARD_NAME;MARKET_HASH_NAME;LAST_UPDATED}
+
+
+
+{0.38;Critter;444520-Critter;2021-06-30}
+
+{0.11;The Peacekeeper;557830-The%20Peacekeeper;2021-06-30}
+
+{0.24;December (Trading Card);587390-December%20%28Trading%20Card%29;2021-06-30}
+
+{0.19;Ninja;463000-Ninja;2021-06-30}
+
+{0.09;Level 20 (Trading Card);334300-Level%2020%20%28Trading%20Card%29;2021-06-30}
+
+{0.14;Eating Squad (Trading Card);568780-Eating%20Squad%20%28Trading%20Card%29;2021-06-30}
+
+{0.12;Hesperus;459410-Hesperus;2021-06-30}
+
+{0.1;Pod;257050-Pod;2021-06-30}
+
+{0.11;Bridge Of Stone;470270-Bridge%20Of%20Stone;2021-06-30}
+
+{0.09;Life Core;507520-Life%20Core;2021-06-30}
+
+{0.09;Chop Chop;533340-Chop%20Chop;2021-06-30}
+
+{0.1;Tetrahedron;619890-Tetrahedron;2021-06-30}
+
+{0.2;Glider;627670-Glider;2021-06-30}
+
+{0.14;Wait! (Trading Card);576730-Wait%21%20%28Trading%20Card%29;2021-06-30}
+
+{0.07;Glitch;619890-Glitch;2021-06-30}
+
+{0.08;Hateful Rogue;612250-Hateful%20Rogue;2021-06-30}
+
+{0.05;Hazmat;415670-Hazmat;2021-06-30}
+
+{0.04;Heads in the Sky;485870-Heads%20in%20the%20Sky;2021-06-30}
+
+{0.05;Heartmobile Concept;336730-Heartmobile%20Concept;2021-06-30}
+
+{0.05;Heavy Ship;411120-Heavy%20Ship;2021-06-30}
+
+{0.04;Heck;547090-Heck;2021-06-30}
+
+{0.05;Here We Go;593670-Here%20We%20Go;2021-06-30}
+
+{0.04;Hesper;391660-Hesper;2021-06-30}
+
+{0.05;Hide and Seek;284990-Hide%20and%20Seek;2021-06-30}
+
+{0.04;Hearts card;501480-Hearts%20card;2021-06-30}
+
+{0.04;Highest Revenue;399670-Highest%20Revenue;2021-06-30}
+
+{0.05;Hive - Weevil;312960-Hive%20-%20Weevil;2021-06-30}
+
+{0.06;History Book;396530-History%20Book;2021-06-30}
+
+{0.05;Hiver Attack Craft;267730-Hiver%20Attack%20Craft;2021-06-30}
+
+{0.05;Hiver Rockets;267730-Hiver%20Rockets;2021-06-30}
+
+{0.05;Hiver Hover Tanks;267730-Hiver%20Hover%20Tanks;2021-06-30}
+
+{0.04;Homer (Trading Card);400180-Homer%20%28Trading%20Card%29;2021-06-30}
+
+{0.04;Hiver Offensive;267730-Hiver%20Offensive;2021-06-30}
+
+{0.24;December (Trading Card);587390-December%20%28Trading%20Card%29;2021-07-01}
+
+{0.38;Critter;444520-Critter;2021-07-01}
+
+{0.11;The Peacekeeper;557830-The%20Peacekeeper;2021-07-01}
+
+{0.1;Pod;257050-Pod;2021-07-01}
+
+{0.19;Ninja;463000-Ninja;2021-07-01}
+
+{0.14;Eating Squad (Trading Card);568780-Eating%20Squad%20%28Trading%20Card%29;2021-07-01}
+
+{0.12;Hesperus;459410-Hesperus;2021-07-01}
+
+{0.11;Bridge Of Stone;470270-Bridge%20Of%20Stone;2021-06-30}
+
+{0.09;Level 20 (Trading Card);334300-Level%2020%20%28Trading%20Card%29;2021-07-01}
+
+{0.2;Glider;627670-Glider;2021-06-30}
+
+{0.09;Chop Chop;533340-Chop%20Chop;2021-06-30}
+
+{0.09;Life Core;507520-Life%20Core;2021-06-30}
+
+{0.35;The Rabbit;576390-The%20Rabbit;2021-07-01}
+
+{0.75;Flame;614660-Flame;2021-07-01}
+
+{0.32;ELE (Trading Card);414760-ELE%20%28Trading%20Card%29;2021-07-01}
+
+{0.05;Glasses;540190-Glasses;2021-07-01}
+
+{0.12;King of El Dorado;298380-King%20of%20El%20Dorado;2021-07-01}
+
+{0.17;The Prophecy;298380-The%20Prophecy;2021-07-01}
+
+{0.11;Pummler;594810-Pummler;2021-07-01}
+
+{0.13;Vampire Lord;278590-Vampire%20Lord;2021-07-01}
+
+{0.05;Bonnie the Rogue;485260-Bonnie%20the%20Rogue;2021-07-01}
+
+{0.08;Painting;396530-Painting;2021-07-01}
+
+{0.11;Slime;600310-Slime;2021-07-01}
+
+{0.09;Sutter's Mill (Trading Card);609100-Sutter%27s%20Mill%20%28Trading%20Card%29;2021-07-01}
+
+{0.09;The Father;460940-The%20Father;2021-07-01}
+
+{0.06;Abu Ali;490690-Abu%20Ali;2021-07-01}
+
+{0.06;All-Skeleton Band;352220-All-Skeleton%20Band;2021-07-01}
+
+{0.07;Arisa;520520-Arisa;2021-07-01}
+
+{0.07;Bed;396530-Bed;2021-07-01}
+
+{0.07;Bedroom;576440-Bedroom;2021-07-01}
+
+{0.06;Buffalo Will;493180-Buffalo%20Will;2021-07-01}
+
+{0.05;Cannon;614660-Cannon;2021-07-01}
+
+{0.06;Cat;587790-Cat;2021-07-01}
+
+{0.06;Coffee break;502100-Coffee%20break;2021-07-01}
+
+{0.07;Cop;588240-Cop;2021-07-01}
+
+{0.07;Derelict Farmhouse House;258950-Derelict%20Farmhouse%20House;2021-07-01}
+
+{0.04;Doubts;576730-Doubts;2021-07-01}
+
+{0.06;Dwarven Warrior;454870-Dwarven%20Warrior;2021-07-01}
+
+{0.08;Eclipse;237590-Eclipse;2021-07-01}
+
+{0.05;Egypt;586430-Egypt;2021-07-01}
+
+{0.05;Eye of Horror;501030-Eye%20of%20Horror;2021-07-01}
+
+{0.07;Falco Frisk;588240-Falco%20Frisk;2021-07-01}
+
+{0.06;Fly;576540-Fly;2021-07-01}
+
+{0.06;Foresting Tower;342970-Foresting%20Tower;2021-07-01}
+
+{0.08;Hank gay;568860-Hank%20gay;2021-07-01}
+
+{0.06;Itchy Billy;612250-Itchy%20Billy;2021-07-01}
+
+{0.08;Let's eat!;620310-Let%27s%20eat%21;2021-07-01}
+
+{0.06;Magnetic Pulse;449120-Magnetic%20Pulse;2021-07-01}
+
+{0.05;Make American Burger Great Again!;504310-Make%20American%20Burger%20Great%20Again%21;2021-07-01}
+
+{0.07;Mary;610120-Mary;2021-07-01}
+
+{0.07;Masahiro;520520-Masahiro;2021-07-01}
+
+{0.05;Mastermind;574690-Mastermind;2021-07-01}
+
+{0.05;Mining Drill;351720-Mining%20Drill;2021-07-01}
+
+{0.06;Mortar;614660-Mortar;2021-07-01}
+
+{0.06;Mystic;627670-Mystic;2021-07-01}
+
+{0.06;Neutral Forces - Small Saucer;312960-Neutral%20Forces%20-%20Small%20Saucer;2021-07-01}
+
+{0.09;Niamber;616030-Niamber;2021-07-01}
+
+{0.06;Old family;610120-Old%20family;2021-07-01}
+
+{0.06;Oni;399000-Oni;2021-07-01}
+
+{0.06;Played Level One!;334300-Played%20Level%20One%21;2021-07-01}
+
+{0.07;Preacher;449530-Preacher;2021-07-01}
+
+{0.07;Puzzle Planet;390620-Puzzle%20Planet;2021-07-01}
+
+{0.05;R'jak;449300-R%27jak;2021-07-01}
+
+{0.07;RedKnight;422650-RedKnight;2021-07-01}
+
+{0.07;River Huntress;544140-River%20Huntress;2021-07-01}
+
+{0.05;Robin Hood;388960-Robin%20Hood;2021-07-01}
+
+{0.05;Rock Candy;581980-Rock%20Candy;2021-07-01}
+
+{0.05;San Diego, Four Day Pass;592200-San%20Diego%2C%20Four%20Day%20Pass;2021-07-01}
+
+{0.07;Sand clock;462400-Sand%20clock;2021-07-01}
+
+{0.06;Shadow;576730-Shadow;2021-07-01}
+
+{0.08;Skull;396530-Skull;2021-07-01}
+
+{0.06;Squid;627670-Squid;2021-07-01}
+
+{0.07;St Peter Basilica;452320-St%20Peter%20Basilica;2021-07-01}
+
+{0.07;Television;396530-Television;2021-07-01}
+
+{0.06;The Big Boss;431290-The%20Big%20Boss;2021-07-01}
+
+{0.06;The Ice Dragon;384940-The%20Ice%20Dragon;2021-07-01}
+
+{0.06;The Leadersquad;488330-The%20Leadersquad;2021-07-01}
+
+{0.06;The Mechanical Beast;384940-The%20Mechanical%20Beast;2021-07-01}
+
+{0.07;The Rock Monster;384940-The%20Rock%20Monster;2021-07-01}
+
+{0.1;The Room;499340-The%20Room;2021-07-01}
+
+{0.12;The Sewers;398830-The%20Sewers;2021-07-01}
+
+{0.06;Van;595320-Van;2021-07-01}
+
+{0.07;Wall Block;507520-Wall%20Block;2021-07-01}
+
+{0.06;Zombie Guard (Trading Card);594160-Zombie%20Guard%20%28Trading%20Card%29;2021-07-01}
+
+{0.04;Accurate_Crossbow;575770-Accurate_Crossbow;2021-07-01}
+
+{0.04;Adrian Wornoff;416370-Adrian%20Wornoff;2021-07-01}
+
+{0.06;Airplane;338120-Airplane;2021-07-01}
+
+{0.04;Alien Overlord;595780-Alien%20Overlord;2021-07-01}
+
+{0.04;Anastasia;530020-Anastasia;2021-07-01}
+
+{0.04;Andy Duck;612250-Andy%20Duck;2021-07-01}
+
+{0.04;Anku;391660-Anku;2021-07-01}
+
+{0.04;AntiKermit;585750-AntiKermit;2021-07-01}
+
+{0.04;Aphrodite (Trading Card);400180-Aphrodite%20%28Trading%20Card%29;2021-07-01}
+
+{0.04;Apparition - Bat;416370-Apparition%20-%20Bat;2021-07-01}
+
+{0.04;Apparition - Mummy;416370-Apparition%20-%20Mummy;2021-07-01}
+
+{0.04;Apparition - Werewolf;416370-Apparition%20-%20Werewolf;2021-07-01}
+
+{0.05;April;587390-April;2021-07-01}
+
+{0.05;Aptenodytes patagonicus;344230-Aptenodytes%20patagonicus;2021-07-01}
+
+{0.04;Archangel Michael;542240-Archangel%20Michael;2021-07-01}
+
+{0.05;Attack Helicopter;495570-Attack%20Helicopter;2021-07-01}
+
+{0.06;Awake;507520-Awake;2021-07-01}
+
+{0.06;Axe;576390-Axe;2021-07-01}
+
+{0.04;Axle;574690-Axle;2021-07-01}
+
+{0.05;AYATO (Trading Card);259510-AYATO%20%28Trading%20Card%29;2021-07-01}
+
+{0.04;Azure Demon;290650-Azure%20Demon;2021-07-01}
+
+{0.04;Bad dreams;348870-Bad%20dreams;2021-07-01}
+
+{0.06;Barbarian Berserkers;508300-Barbarian%20Berserkers;2021-07-01}
+
+{0.05;Barn;342970-Barn;2021-07-01}
+
+{0.05;Battle Janet (Concept);592200-Battle%20Janet%20%28Concept%29;2021-07-01}
+
+{0.04;Battle Janet (No Detail);592200-Battle%20Janet%20%28No%20Detail%29;2021-07-01}
+
+{0.05;Bear;576390-Bear;2021-07-01}
+
+{0.04;Bee;587790-Bee;2021-07-01}
+
+{0.04;Bentele;581200-Bentele;2021-07-01}
+
+{0.05;Beta;575630-Beta;2021-07-01}
+
+{0.04;Between Worlds;290650-Between%20Worlds;2021-07-01}
+
+{0.04;Bill Horner;612250-Bill%20Horner;2021-07-01}
+
+{0.04;Biohazard;548480-Biohazard;2021-07-01}
+
+{0.04;Bitsy;371390-Bitsy;2021-07-01}
+
+{0.04;Black hawk card;501480-Black%20hawk%20card;2021-07-01}
+
+{0.04;Black Station;461880-Black%20Station;2021-07-01}
+
+{0.04;Blockade;356420-Blockade;2021-07-01}
+
+{0.04;Blocks;461880-Blocks;2021-07-01}
+
+{0.04;Blocks;461880-Blocks;2021-07-01}
+
+{0.05;Bloody pages of the book;431260-Bloody%20pages%20of%20the%20book;2021-07-01}
+
+{0.04;BOLTCraft;312640-BOLTCraft;2021-07-01}
+
+{0.05;Bomberman;585360-Bomberman;2021-07-01}
+
+{0.05;Boost Charge;504460-Boost%20Charge;2021-07-01}
+
+{0.04;Brave hero;450190-Brave%20hero;2021-07-01}
+
+{0.04;Brella (Trading Card);385080-Brella%20%28Trading%20Card%29;2021-07-01}
+
+{0.04;Bridge;468570-Bridge;2021-07-01}
+
+{0.05;Brimstone Soldier;281220-Brimstone%20Soldier;2021-07-01}
+
+{0.05;Broadcast;468570-Broadcast;2021-07-01}
+
+{0.05;Brooding Warrior Drinking Game;592200-Brooding%20Warrior%20Drinking%20Game;2021-07-01}
+
+{0.04;Brute;385080-Brute;2021-07-01}
+
+{0.05;BUPBUP;259510-BUPBUP;2021-07-01}
+
+{0.05;Burning Forest;251230-Burning%20Forest;2021-07-01}
+
+{0.04;Buzzsaw;385080-Buzzsaw;2021-07-01}
+
+{0.05;Byron;363510-Byron;2021-07-01}
+
+{0.04;Cabbage Ducks;352220-Cabbage%20Ducks;2021-07-01}
+
+{0.05;Cannon !;417480-Cannon%20%21;2021-07-01}
+
+{0.04;Cannoner;636370-Cannoner;2021-07-01}
+
+{0.04;Captain;636370-Captain;2021-07-01}
+
+{0.05;Caravan Traveler;610310-Caravan%20Traveler;2021-07-01}
+
+{0.05;Cargo;627670-Cargo;2021-07-01}
+
+{0.04;Carissia (Trading Card);485390-Carissia%20%28Trading%20Card%29;2021-07-01}
+
+{0.04;Carissia Art;485390-Carissia%20Art;2021-07-01}
+
+{0.05;Carrier ship;411120-Carrier%20ship;2021-07-01}
+
+{0.05;Catapult;333660-Catapult;2021-07-01}
+
+{0.04;Caveman;460190-Caveman;2021-07-01}
+
+{0.05;CGA Keen;356200-CGA%20Keen;2021-07-01}
+
+{0.04;Chad;486150-Chad;2021-07-01}
+
+{0.04;Chaos;461880-Chaos;2021-07-01}
+
+{0.04;Characters;270570-Characters;2021-07-01}
+
+{0.04;Chasing;576130-Chasing;2021-07-01}
+
+{0.04;Chick Hunter Elite;612250-Chick%20Hunter%20Elite;2021-07-01}
+
+{0.05;Chilling Mom;287200-Chilling%20Mom;2021-07-01}
+
+{0.05;Chris McDougal;542200-Chris%20McDougal;2021-07-01}
+
+{0.05;City government card;463670-City%20government%20card;2021-07-01}
+
+{0.05;Civilian blue;568860-Civilian%20blue;2021-07-01}
+
+{0.04;Classic Map;614030-Classic%20Map;2021-07-01}
+
+{0.05;Classics;583490-Classics;2021-07-01}
+
+{0.05;Clover;462400-Clover;2021-07-01}
+
+{0.04;Clown;636370-Clown;2021-07-01}
+
+{0.04;Clown;636370-Clown;2021-07-01}
+
+{0.04;Col. Aloysius Emenegger;374030-Col.%20Aloysius%20Emenegger;2021-07-01}
+
+{0.05;Cold War Warrior Concepts;336730-Cold%20War%20Warrior%20Concepts;2021-07-01}
+
+{0.05;Collapse, the Intrepid Hunter;521330-Collapse%2C%20the%20Intrepid%20Hunter;2021-07-01}
+
+{0.05;Collect All;362610-Collect%20All;2021-07-01}
+
+{0.04;Commando;627950-Commando;2021-07-01}
+
+{0.05;Composure;314070-Composure;2021-07-01}
+
+{0.03;Computer;595780-Computer;2021-07-01}
+
+{0.05;CONCEPT X;389670-CONCEPT%20X;2021-07-01}
+
+{0.04;Cord McCarran;374030-Cord%20McCarran;2021-07-01}
+
+{0.04;Corrientes Avenue;270570-Corrientes%20Avenue;2021-07-01}
+
+{0.07;Courier;458630-Courier;2021-07-01}
+
+{0.05;Courtyard (Trading Card);622170-Courtyard%20%28Trading%20Card%29;2021-07-01}
+
+{0.04;Crash Landing (Trading Card);576130-Crash%20Landing%20%28Trading%20Card%29;2021-07-01}
+
+{0.04;Crazy Card;629380-Crazy%20Card;2021-07-01}
+
+{0.04;Creative;583490-Creative;2021-07-01}
+
+{0.05;Crippler;381220-Crippler;2021-07-01}
+
+{0.05;Critical Urgency;244890-Critical%20Urgency;2021-07-01}
+
+{0.04;Crius;459410-Crius;2021-07-01}
+
+{0.04;Crocodile;587790-Crocodile;2021-07-01}
+
+{0.04;Crypt;513340-Crypt;2021-07-01}
+
+{0.05;Cursed Mercenary;454870-Cursed%20Mercenary;2021-07-01}
+
+{0.04;Cutlass (Trading Card);385080-Cutlass%20%28Trading%20Card%29;2021-07-01}
+
+{0.04;Cyber City View;454690-Cyber%20City%20View;2021-07-01}
+
+{0.04;Damaged card;501480-Damaged%20card;2021-07-01}
+
+{0.05;Dangerforce, Skull Ball Champion;521330-Dangerforce%2C%20Skull%20Ball%20Champion;2021-07-01}
+
+{0.05;Dango;643880-Dango;2021-07-01}
+
+{0.04;Darius;588240-Darius;2021-07-01}
+
+{0.05;Dark elves;574580-Dark%20elves;2021-07-01}
+
+{0.05;Dark World 4;420360-Dark%20World%204;2021-07-01}
+
+{0.04;Darmek;391660-Darmek;2021-07-01}
+
+{0.04;Darrem;402220-Darrem;2021-07-01}
+
+{0.05;David;387010-David;2021-07-01}
+
+{0.04;Daylight;385080-Daylight;2021-07-01}
+
+{0.05;Deadly Dragon;504980-Deadly%20Dragon;2021-07-01}
+
+{0.05;DECK #3;364690-DECK%20%233;2021-07-01}
+
+{0.04;DECK #4;364690-DECK%20%234;2021-07-01}
+
+{0.05;Dedication;274980-Dedication;2021-07-01}
+
+{0.04;DEFCraft;312640-DEFCraft;2021-07-01}
+
+{0.05;Defender;356420-Defender;2021-07-01}
+
+{0.05;Defender;356420-Defender;2021-07-01}
+
+{0.03;Defender of the princess;450190-Defender%20of%20the%20princess;2021-07-01}
+
+{0.06;Demon;547090-Demon;2021-07-01}
+
+{0.05;Demon skater (Trading Card);444520-Demon%20skater%20%28Trading%20Card%29;2021-07-01}
+
+{0.04;Demons;286120-Demons;2021-07-01}
+
+{0.04;Destroyer;356420-Destroyer;2021-07-01}
+
+{0.04;Diagramming The Stars;594720-Diagramming%20The%20Stars;2021-07-01}
+
+{0.05;Dictator;585360-Dictator;2021-07-01}
+
+{0.05;Dinosaur Eggs;352220-Dinosaur%20Eggs;2021-07-01}
+
+{0.05;Dinosaur King;574690-Dinosaur%20King;2021-07-01}
+
+{0.05;Director Cannon;502150-Director%20Cannon;2021-07-01}
+
+{0.05;Disaster;457710-Disaster;2021-07-01}
+
+{0.05;DISINTEGRATR;431200-DISINTEGRATR;2021-07-01}
+
+{0.06;Do I have time to catch those gems?;477290-Do%20I%20have%20time%20to%20catch%20those%20gems%3F;2021-07-01}
+
+{0.05;Doc;636370-Doc;2021-07-01}
+
+{0.05;Doc DuBrane;486150-Doc%20DuBrane;2021-07-01}
+
+{0.05;Dog;600310-Dog;2021-07-01}
+
+{0.04;Doggy Wants to Play!;399130-Doggy%20Wants%20to%20Play%21;2021-07-01}
+
+{0.04;Doom card;501480-Doom%20card;2021-07-01}
+
+{0.04;Door;547710-Door;2021-07-01}
+
+{0.05;Dr. Science;574690-Dr.%20Science;2021-07-01}
+
+{0.05;Dragons;352220-Dragons;2021-07-01}
+
+{0.05;Dregs;384950-Dregs;2021-07-01}
+
+{0.04;Dres;412170-Dres;2021-07-01}
+
+{0.04;Drone;530020-Drone;2021-07-01}
+
+{0.04;Drones;356420-Drones;2021-07-01}
+
+{0.05;Druid;454870-Druid;2021-07-01}
+
+{0.05;Dusk, the Blade Mistress;521330-Dusk%2C%20the%20Blade%20Mistress;2021-07-01}
+
+{0.05;Dynamite (Trading Card);609100-Dynamite%20%28Trading%20Card%29;2021-07-01}
+
+{0.04;Dynamite Girl;540860-Dynamite%20Girl;2021-07-01}
+
+{0.04;ED Tank2;253880-ED%20Tank2;2021-07-01}
+
+{0.05;Eight Form;521630-Eight%20Form;2021-07-01}
+
+{0.05;Elderly water carrier;490690-Elderly%20water%20carrier;2021-07-01}
+
+{0.05;Eleazar (Trading Card);387010-Eleazar%20%28Trading%20Card%29;2021-07-01}
+
+{0.04;Elisa;402220-Elisa;2021-07-01}
+
+{0.05;Elizabeth (Trading Card);585360-Elizabeth%20%28Trading%20Card%29;2021-07-01}
+
+{0.05;Elks;338120-Elks;2021-07-01}
+
+{0.06;Emperor;415840-Emperor;2021-07-01}
+
+{0.05;Enabler;381220-Enabler;2021-07-01}
+
+{0.04;Enginner;383230-Enginner;2021-07-01}
+
+{0.04;Epic Hyperfoil Narwowlbear;592200-Epic%20Hyperfoil%20Narwowlbear;2021-07-01}
+
+{0.05;Escape;417480-Escape;2021-07-01}
+
+{0.05;Escape close-up (Trading Card);375120-Escape%20close-up%20%28Trading%20Card%29;2021-07-01}
+
+{0.04;Esther;340650-Esther;2021-07-01}
+
+{0.05;Eulan;616030-Eulan;2021-07-01}
+
+{0.04;Evening for books;513570-Evening%20for%20books;2021-07-01}
+
+{0.04;Evil card;501480-Evil%20card;2021-07-01}
+
+{0.04;Evil Tree;340830-Evil%20Tree;2021-07-01}
+
+{0.04;Exception Ship;619890-Exception%20Ship;2021-07-01}
+
+{0.04;FABCraft;312640-FABCraft;2021-07-01}
+
+{0.04;FaceBox;486150-FaceBox;2021-07-01}
+
+{0.04;Falling;348870-Falling;2021-07-01}
+
+{0.04;Female Hero;548480-Female%20Hero;2021-07-01}
+
+{0.03;Female Pyro;548480-Female%20Pyro;2021-07-01}
+
+{0.04;Female Soldier;548480-Female%20Soldier;2021-07-01}
+
+{0.05;Feuer;384950-Feuer;2021-07-01}
+
+{0.04;Fight Mode;614030-Fight%20Mode;2021-07-01}
+
+{0.03;Fire Hydrant;595780-Fire%20Hydrant;2021-07-01}
+
+{0.05;Fire Sprite;548680-Fire%20Sprite;2021-07-01}
+
+{0.04;Fire-breathing monster;450190-Fire-breathing%20monster;2021-07-01}
+
+{0.04;Firearm (Trading Card);385080-Firearm%20%28Trading%20Card%29;2021-07-01}
+
+{0.04;First Troubles;370050-First%20Troubles;2021-07-01}
+
+{0.05;Fishing Boat;342970-Fishing%20Boat;2021-07-01}
+
+{0.04;Flashlight;462400-Flashlight;2021-07-01}
+
+{0.05;Flat Castle;405970-Flat%20Castle;2021-07-01}
+
+{0.05;Flatlantis;405970-Flatlantis;2021-07-01}
+
+{0.05;Flatsgard;405970-Flatsgard;2021-07-01}
+
+{0.04;Flee;620310-Flee;2021-07-01}
+
+{0.04;Flesh Parasite;407880-Flesh%20Parasite;2021-07-01}
+
+{0.03;Fleshling;384950-Fleshling;2021-07-01}
+
+{0.05;Flix (Trading Card);371390-Flix%20%28Trading%20Card%29;2021-07-01}
+
+{0.05;FLOWR;431200-FLOWR;2021-07-01}
+
+{0.04;Flying Dragon;540860-Flying%20Dragon;2021-07-01}
+
+{0.05;Following the darling even to the ends of the earth;431260-Following%20the%20darling%20even%20to%20the%20ends%20of%20the%20earth;2021-07-01}
+
+{0.06;Food Kit;620310-Food%20Kit;2021-07-01}
+
+{0.04;Football Player;548480-Football%20Player;2021-07-01}
+
+{0.05;Forest;513340-Forest;2021-07-01}
+
+{0.05;Forever Alone;485870-Forever%20Alone;2021-07-01}
+
+{0.05;Forever lost;604830-Forever%20lost;2021-07-01}
+
+{0.04;Fork;363620-Fork;2021-07-01}
+
+{0.04;Fortune card;501480-Fortune%20card;2021-07-01}
+
+{0.05;Fracture;284990-Fracture;2021-07-01}
+
+{0.04;Frank;449530-Frank;2021-07-01}
+
+{0.04;Freak of Nature;287200-Freak%20of%20Nature;2021-07-01}
+
+{0.05;Frederick Emenegger;374030-Frederick%20Emenegger;2021-07-01}
+
+{0.05;Friggin' George Washington;592200-Friggin%27%20George%20Washington;2021-07-01}
+
+{0.05;Gallina Vecchia;416350-Gallina%20Vecchia;2021-07-01}
+
+{0.04;Gandohar;7530-Gandohar;2021-07-01}
+
+{0.06;Gardener;568860-Gardener;2021-07-01}
+
+{0.05;Gary;574690-Gary;2021-07-01}
+
+{0.04;Gauss;614660-Gauss;2021-07-01}
+
+{0.05;Gearbolt Giant;341160-Gearbolt%20Giant;2021-07-01}
+
+{0.05;Gem Blender;385410-Gem%20Blender;2021-07-01}
+
+{0.05;Genie;417480-Genie;2021-07-01}
+
+{0.04;Germ;384250-Germ;2021-07-01}
+
+{0.04;Get Down;513570-Get%20Down;2021-07-01}
+
+{0.04;Ghost family;416370-Ghost%20family;2021-07-01}
+
+{0.05;Ghostbusters;417480-Ghostbusters;2021-07-01}
+
+{0.05;Giant;371460-Giant;2021-07-01}
+
+{0.05;Giant;371460-Giant;2021-07-01}
+
+{0.03;Girl Werewolf Hamlet;592200-Girl%20Werewolf%20Hamlet;2021-07-01}
+
+{0.04;GlamBox;486150-GlamBox;2021-07-01}
+
+{0.04;Gnome Chomspky;486150-Gnome%20Chomspky;2021-07-01}
+
+{0.05;goblins reputation card;463670-goblins%20reputation%20card;2021-07-01}
+
+{0.04;Goldfish;576390-Goldfish;2021-07-01}
+
+{0.05;Golem;454870-Golem;2021-07-01}
+
+{0.05;Goliath;387010-Goliath;2021-07-01}
+
+{0.05;Goliath (Trading Card);347160-Goliath%20%28Trading%20Card%29;2021-07-01}
+
+{0.03;Goon;595780-Goon;2021-07-01}
+
+{0.03;Goon;595780-Goon;2021-07-01}
+
+{0.05;Grandpa Crank;418440-Grandpa%20Crank;2021-07-01}
+
+{0.04;Green;461880-Green;2021-07-01}
+
+{0.04;Green card;501480-Green%20card;2021-07-01}
+
+{0.04;Gun Robot;463000-Gun%20Robot;2021-07-01}
+
+{0.04;Gwydion;485390-Gwydion;2021-07-01}
+
+{0.04;Hammer;614660-Hammer;2021-07-01}
+
+{0.05;Hammer Vipkrad;417480-Hammer%20Vipkrad;2021-07-01}
+
+{0.05;Hanged;417480-Hanged;2021-07-01}
+
+{0.05;Harpy;399000-Harpy;2021-07-01}
+
+{0.04;Harry Branden;374030-Harry%20Branden;2021-07-01}
+
+{0.05;Hat Hunter Prime;612250-Hat%20Hunter%20Prime;2021-07-01}
+
+{0.05;Hero;222160-Hero;2021-07-01}
+
+{0.04;Hiroshima Castle;284950-Hiroshima%20Castle;2021-07-01}
+
+{0.04;Homeless Joe;595460-Homeless%20Joe;2021-07-01}
+
+{0.04;Homo sapiens novus;266050-Homo%20sapiens%20novus;2021-07-01}
+
+{0.06;Honkotron;584860-Honkotron;2021-07-01}
+
+{0.05;Hospital;502100-Hospital;2021-07-01}
+
+{0.04;House of Thousand Floors;513340-House%20of%20Thousand%20Floors;2021-07-01}
+
+{0.04;I Will Cut You in the Leg;399130-I%20Will%20Cut%20You%20in%20the%20Leg;2021-07-01}
+
+{0.05;Ice;614660-Ice;2021-07-01}
+
+{0.05;Ice;614660-Ice;2021-07-01}
+
+{0.04;Ice Girl;463000-Ice%20Girl;2021-07-01}
+
+{0.04;Ice Ice Babe;540860-Ice%20Ice%20Babe;2021-07-01}
+
+{0.05;Ice spikes;614660-Ice%20spikes;2021-07-01}
+
+{0.04;Ice Troll (Trading Card);371460-Ice%20Troll%20%28Trading%20Card%29;2021-07-01}
+
+{0.05;Ice-Cream Skating;477290-Ice-Cream%20Skating;2021-07-01}
+
+{0.04;Icicle Land;290650-Icicle%20Land;2021-07-01}
+
+{0.04;Ifrit (Trading Card);371460-Ifrit%20%28Trading%20Card%29;2021-07-01}
+
+{0.05;Illustration Sketch (Trading Card);477290-Illustration%20Sketch%20%28Trading%20Card%29;2021-07-01}
+
+{0.05;Imp;600310-Imp;2021-07-01}
+
+{0.05;Imperial Deadshots;508300-Imperial%20Deadshots;2021-07-01}
+
+{0.04;Indestructible Manta;612250-Indestructible%20Manta;2021-07-01}
+
+{0.06;Injured Guy;477290-Injured%20Guy;2021-07-01}
+
+{0.05;Invader lion 2;448690-Invader%20lion%202;2021-07-01}
+
+{0.04;Inventors District;398830-Inventors%20District;2021-07-01}
+
+{0.04;Investigation;546700-Investigation;2021-07-01}
+
+{0.06;Iraplish the Trader;610310-Iraplish%20the%20Trader;2021-07-01}
+
+{0.05;Irelandâ€™s North Atlantic Coast;258950-Ireland%E2%80%99s%20North%20Atlantic%20Coast;2021-07-01}
+
+{0.04;Iris;409450-Iris;2021-07-01}
+
+{0.04;Iron_Ax;575770-Iron_Ax;2021-07-01}
+
+{0.05;Isen the fair;517370-Isen%20the%20fair;2021-07-01}
+
+{0.05;Israelite;387010-Israelite;2021-07-01}
+
+{0.05;Ixya;616030-Ixya;2021-07-01}
+
+{0.04;Jake;609100-Jake;2021-07-01}
+
+{0.04;January;587390-January;2021-07-01}
+
+{0.04;Jared Fairfax;374030-Jared%20Fairfax;2021-07-01}
+
+{0.06;Jashobeam (Trading Card);387010-Jashobeam%20%28Trading%20Card%29;2021-07-01}
+
+{0.04;Jasmine and Jake;595460-Jasmine%20and%20Jake;2021-07-01}
+
+{0.05;Jason and Marta;595460-Jason%20and%20Marta;2021-07-01}
+
+{0.05;Jaws;429220-Jaws;2021-07-01}
+
+{0.04;Jeff;595460-Jeff;2021-07-01}
+
+{0.04;Jenny;344850-Jenny;2021-07-01}
+
+{0.04;Jerry Crane;416370-Jerry%20Crane;2021-07-01}
+
+{0.03;Jin;485390-Jin;2021-07-01}
+
+{0.05;John Walters;568860-John%20Walters;2021-07-01}
+
+{0.05;Judith Ortega;374030-Judith%20Ortega;2021-07-01}
+
+{0.05;July;587390-July;2021-07-01}
+
+{0.05;Justin Aldridge;431260-Justin%20Aldridge;2021-07-01}
+
+{0.04;K.O.R.B.;634200-K.O.R.B.;2021-07-01}
+
+{0.05;Kallyr the Hero;352220-Kallyr%20the%20Hero;2021-07-01}
+
+{0.04;Karmodius;338120-Karmodius;2021-07-01}
+
+{0.04;Kautic;600530-Kautic;2021-07-01}
+
+{0.05;Keeper reputation card;463670-Keeper%20reputation%20card;2021-07-01}
+
+{0.05;Ken;461760-Ken;2021-07-01}
+
+{0.04;Kidnapping (Trading Card);576130-Kidnapping%20%28Trading%20Card%29;2021-07-01}
+
+{0.05;King;588490-King;2021-07-01}
+
+{0.05;King Midas;400180-King%20Midas;2021-07-01}
+
+{0.04;Kingsen;581200-Kingsen;2021-07-01}
+
+{0.05;Kiriro;616030-Kiriro;2021-07-01}
+
+{0.04;Klaus;449530-Klaus;2021-07-01}
+
+{0.05;Knight Tournament;215790-Knight%20Tournament;2021-07-01}
+
+{0.05;Knockout;454080-Knockout;2021-07-01}
+
+{0.05;Korol the Bard;352220-Korol%20the%20Bard;2021-07-01}
+
+{0.04;Krandar;643880-Krandar;2021-07-01}
+
+{0.06;Kumiko;520520-Kumiko;2021-07-01}
+
+{0.04;Kyle Yang (Trading Card);542200-Kyle%20Yang%20%28Trading%20Card%29;2021-07-01}
+
+{0.04;Lamboolio;581200-Lamboolio;2021-07-01}
+
+{0.04;Lamentina;616030-Lamentina;2021-07-01}
+
+{0.04;Larry;584860-Larry;2021-07-01}
+
+{0.06;Laser Ship;411120-Laser%20Ship;2021-07-01}
+
+{0.06;Last steamship;348870-Last%20steamship;2021-07-01}
+
+{0.04;Led;253940-Led;2021-07-01}
+
+{0.04;Lee Petty;402590-Lee%20Petty;2021-07-01}
+
+{0.05;LEONARD;606730-LEONARD;2021-07-01}
+
+{0.04;Leonard Kalberman;374030-Leonard%20Kalberman;2021-07-01}
+
+{0.04;Leonidas;400180-Leonidas;2021-07-01}
+
+{0.04;Let's Fight!;402220-Let%27s%20Fight%21;2021-07-01}
+
+{0.04;Level 25;334300-Level%2025;2021-07-01}
+
+{0.04;Level 30;334300-Level%2030;2021-07-01}
+
+{0.05;level 50;463670-level%2050;2021-07-01}
+
+{0.04;Light Map;614030-Light%20Map;2021-07-01}
+
+{0.04;LIGHTNING BOLT!;592200-LIGHTNING%20BOLT%21;2021-07-01}
+
+{0.04;Lightning strike;614660-Lightning%20strike;2021-07-01}
+
+{0.04;Lone Star;461880-Lone%20Star;2021-07-01}
+
+{0.05;Look Through;284990-Look%20Through;2021-07-01}
+
+{0.04;Lora (Trading Card);485390-Lora%20%28Trading%20Card%29;2021-07-01}
+
+{0.04;Lorelei (Trading Card);412170-Lorelei%20%28Trading%20Card%29;2021-07-01}
+
+{0.04;Lost;620310-Lost;2021-07-01}
+
+{0.05;Louis;574690-Louis;2021-07-01}
+
+{0.04;Lucas Fairfax;374030-Lucas%20Fairfax;2021-07-01}
+
+{0.04;Lucy;588240-Lucy;2021-07-01}
+
+{0.05;Luna Abatement;361600-Luna%20Abatement;2021-07-01}
+
+{0.04;Madam Great;574690-Madam%20Great;2021-07-01}
+
+{0.04;Magic Staff;340830-Magic%20Staff;2021-07-01}
+
+{0.04;Magnar III;228260-Magnar%20III;2021-07-01}
+
+{0.04;Maicon;377600-Maicon;2021-07-01}
+
+{0.04;Malaric;409450-Malaric;2021-07-01}
+
+{0.05;Mamma Mia!;504310-Mamma%20Mia%21;2021-07-01}
+
+{0.05;Man Behind The Wall;546700-Man%20Behind%20The%20Wall;2021-07-01}
+
+{0.05;Manco, the Claw of Retribution;521330-Manco%2C%20the%20Claw%20of%20Retribution;2021-07-01}
+
+{0.04;Mangus;364910-Mangus;2021-07-01}
+
+{0.05;Mannanan;41900-Mannanan;2021-07-01}
+
+{0.04;Mao Ce;568780-Mao%20Ce;2021-07-01}
+
+{0.05;March;587390-March;2021-07-01}
+
+{0.04;Margaret;454690-Margaret;2021-07-01}
+
+{0.04;Maria;486150-Maria;2021-07-01}
+
+{0.04;Maria Halperin;374030-Maria%20Halperin;2021-07-01}
+
+{0.04;{0.05;Markus;585360-Markus;2021-07-01}
+
+{0.05;Master of Mayhem;576130-Master%20of%20Mayhem;2021-07-01}
+
+{0.05;Mastermind;574690-Mastermind;2021-07-01}
+
+{0.04;Mayor Bacon Fall;374030-Mayor%20Bacon%20Fall;2021-07-01}
+
+{0.04;McRell;415670-McRell;2021-07-01}
+
+{0.05;Mechanical dog;585360-Mechanical%20dog;2021-07-01}
+
+{0.05;Medic's card;262810-Medic%27s%20card;2021-07-01}
+
+{0.05;Medulla spinalis;404860-Medulla%20spinalis;2021-07-01}
+
+{0.05;Medusa;600310-Medusa;2021-07-01}
+
+{0.05;Mel Concepts;336730-Mel%20Concepts;2021-07-01}
+
+{0.04;Memority on Fire;546700-Memority%20on%20Fire;2021-07-01}
+
+{0.04;Meteorites of fire;614660-Meteorites%20of%20fire;2021-07-01}
+
+{0.04;Metropolis;594720-Metropolis;2021-07-01}
+
+{0.04;Mexican Chef;504310-Mexican%20Chef;2021-07-01}
+
+{0.04;Microscope;393790-Microscope;2021-07-01}
+
+{0.04;Mifune;486150-Mifune;2021-07-01}
+
+{0.05;Miguel Castellanos (Trading Card);542200-Miguel%20Castellanos%20%28Trading%20Card%29;2021-07-01}
+
+{0.04;Mike;568780-Mike;2021-07-01}
+
+{0.04;Mikey Rofl;612250-Mikey%20Rofl;2021-07-01}
+
+{0.05;Mine;609100-Mine;2021-07-01}
+
+{0.05;Mine Worker;609100-Mine%20Worker;2021-07-01}
+
+{0.06;Mini Battlefield;434500-Mini%20Battlefield;2021-07-01}
+
+{0.05;Mire, the Swamp Horror;521330-Mire%2C%20the%20Swamp%20Horror;2021-07-01}
+
+{0.05;Missile carrier;411120-Missile%20carrier;2021-07-01}
+
+{0.05;MIYU;259510-MIYU;2021-07-01}
+
+{0.05;Moabite;387010-Moabite;2021-07-01}
+
+{0.04;Monkeys;417480-Monkeys;2021-07-01}
+
+{0.04;Monochrome Map;614030-Monochrome%20Map;2021-07-01}
+
+{0.05;Monster in the house;428630-Monster%20in%20the%20house;2021-07-01}
+
+{0.04;Morian;228260-Morian;2021-07-01}
+
+{0.06;Motes of the Atomic Night;549900-Motes%20of%20the%20Atomic%20Night;2021-07-01}
+
+{0.06;Mother Alien;399000-Mother%20Alien;2021-07-01}
+
+{0.05;Mother-lioness;448690-Mother-lioness;2021-07-01}
+
+{0.04;Mount Kero Fin;352220-Mount%20Kero%20Fin;2021-07-01}
+
+{0.05;Mouse trap;462400-Mouse%20trap;2021-07-01}
+
+{0.04;Mousey;458630-Mousey;2021-07-01}
+
+{0.05;Mr. Brown;338120-Mr.%20Brown;2021-07-01}
+
+{0.05;Mrs. Macaw;584860-Mrs.%20Macaw;2021-07-01}
+
+{0.04;Mummy;7530-Mummy;2021-07-01}
+
+{0.03;Mushroom and Hornet;595780-Mushroom%20and%20Hornet;2021-07-01}
+
+{0.06;Mutant;305640-Mutant;2021-07-01}
+
+{0.06;Mysterious cargo;348870-Mysterious%20cargo;2021-07-01}
+
+{0.04;Nabel;643880-Nabel;2021-07-01}
+
+{0.05;Nagelberd;384950-Nagelberd;2021-07-01}
+
+{0.05;Narwowlbear;592200-Narwowlbear;2021-07-01}
+
+{0.04;Nature (Trading Card);576390-Nature%20%28Trading%20Card%29;2021-07-01}
+
+{0.05;Navigator;636370-Navigator;2021-07-01}
+
+{0.05;Neibag's Jetpack;385410-Neibag%27s%20Jetpack;2021-07-01}
+
+{0.04;Neve;449300-Neve;2021-07-01}
+
+{0.05;New Reaper;502100-New%20Reaper;2021-07-01}
+
+{0.05;Nicolas (Trading Card);281060-Nicolas%20%28Trading%20Card%29;2021-07-01}
+
+{0.05;No love in the space;545580-No%20love%20in%20the%20space;2021-07-01}
+
+{0.05;Normal;583490-Normal;2021-07-01}
+
+{0.05;NosrÃ¼l;409450-Nosr%C3%BCl;2021-07-01}
+
+{0.05;Not afraid...;417480-Not%20afraid...;2021-07-01}
+
+{0.04;Now is the BEST Time to Buy!;399130-Now%20is%20the%20BEST%20Time%20to%20Buy%21;2021-07-01}
+
+{0.05;Nurse;588240-Nurse;2021-07-01}
+
+{0.05;Nurse Julie Concepts;336730-Nurse%20Julie%20Concepts;2021-07-01}
+
+{0.05;Oasis of Calm;287200-Oasis%20of%20Calm;2021-07-01}
+
+{0.05;Occulus;600310-Occulus;2021-07-01}
+
+{0.04;Odavius;643880-Odavius;2021-07-01}
+
+{0.05;Ode;616030-Ode;2021-07-01}
+
+{0.04;Ogree Steed;371460-Ogree%20Steed;2021-07-01}
+
+{0.05;Old Hospital;546700-Old%20Hospital;2021-07-01}
+
+{0.04;Old Man Survivor;548480-Old%20Man%20Survivor;2021-07-01}
+
+{0.04;Old Mines;398830-Old%20Mines;2021-07-01}
+
+{0.05;Oneechan;431220-Oneechan;2021-07-01}
+
+{0.04;Ookel;581200-Ookel;2021-07-01}
+
+{0.36;The Walking Dead;448060-The%20Walking%20Dead;2021-07-02}
+
+{0.38;Ruins;589470-Ruins;2021-07-02}
+
+{0.15;Spiral Dragon;540860-Spiral%20Dragon;2021-07-02}
+
+{0.11;Climbing card;463670-Climbing%20card;2021-07-02}
+
+{0.1;Office;502100-Office;2021-07-02}
+
+{0.16;Toys;502100-Toys;2021-07-02}
+
+{0.1;Dream Dealer (Trading Card);532030-Dream%20Dealer%20%28Trading%20Card%29;2021-07-02}
+
+{0.11;Darkness;442000-Darkness;2021-07-02}
+
+{0.05;Holmes Mech;611050-Holmes%20Mech;2021-07-02}
+

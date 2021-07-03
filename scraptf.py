@@ -1,21 +1,19 @@
+import time
+import json
+import pickle
+from urllib.parse import quote
 from concurrent.futures import thread
-from concurrent.futures.thread import ThreadPoolExecutor
-from os import wait
-from bs4 import BeautifulSoup # Used for website scraping
-import browser_cookie3 as bc # Used for cookie access
+import threading
+from datetime import datetime
 import requests # Gets webpages
-#import urllib.request as requests
+from bs4 import BeautifulSoup # Used for website scraping
 import pandas as pd # csv file reading
 from selenium import webdriver # Potential use for buying cards from scrap.tf
-import time
-from steampy.client import SteamClient
-import pickle
-import urllib.parse
 import chromedriver_binary
-import cfscrape
-from concurrent.futures import ThreadPoolExecutor
-import threading
 from proxy_requests import ProxyRequests
+import steam
+from steam.abc import SteamID
+
 
 def OrganizeCardData(cards): # Organizes cards in list in format CARDTITLE, CARDPRICE(in refined), CARDGAMENAME
     organizedCards = [[]]
@@ -93,27 +91,12 @@ def calculateFee(realPrice): # Calculates how much the steam market listing fee 
     return fee
 
 def calculateProfit(marketCardPrice, fee, cardPriceInScrap): # Estimates the profit based on the estimated steam market price, current key price, RETURNS profit(float, 2)
-    oneScrapRealPrice = (keyPrice / 55) / 9
+    oneScrapRealPrice = (keyPrice / 60) / 9
     realCardPrice = oneScrapRealPrice * cardPriceInScrap
     profit = (marketCardPrice - fee) - realCardPrice
     return round(profit, 2) 
 
-def getCardVolume(card, cardExel): # Doesnt work
-    baseurl = "https://steamcommunity.com/market/search/render/?query=MEDIC&appid="
-    appid = "753&start=0&count=100&norender=1"
-    url = baseurl + appid
-    page = requests.get(url)
-    soup = BeautifulSoup(page.text, 'html.parser')
-
-    # Organize price
-    index1 = soup.text.rfind('"lowest_price":"$') + 17
-    index2 = soup.text.rfind('","volume"')
-    keyPrice = soup.text[index1:index2]
-    #keyPrice = float(keyPrice)
-    keyPrice = 2.40
-    return keyPrice
-
-def selectCardsScrapTF(): # Opens webpage with selenium and selects all the cards
+def selectCardsScrapTF(driver): # Opens webpage with selenium and selects all the cards
     # makes list of top 20 most profitable cards to potentially buy
     x = 0
     top20 = []
@@ -123,19 +106,19 @@ def selectCardsScrapTF(): # Opens webpage with selenium and selects all the card
         else:
             top20.append(card)
             x += 1
-
+    '''
     # Chrome webdriver stuff
     chrome_options  = webdriver.ChromeOptions() 
     #chrome_options.add_argument("user-data-dir=Default") #Path to your chrome profile
     #chrome_options.add_argument("user-data-dir=C:\\Users\\Pablo\\AppData\\Local\\Google\\Chrome\\User Data\\Default") #Path to your chrome profile
     #chrome_options.add_argument("user-data-dir=C:\\Users\\Pablo\\AppData\\Local\\Google\\Chrome\\User Data\\Profile 1") #Path to your chrome profile
     #chrome_options.add_argument("--user-data-dir=Profile 1")
-    chrome_options.add_argument('--lang=en_US') 
-    chrome_options .add_argument("--disable-gpu")
-    chrome_options .add_argument("--no-sandbox")
-    chrome_options.add_argument('--log-level=0')
-    chrome_options.add_argument('--enable-logging')
-    chrome_options.add_argument('--single-process')
+    #chrome_options.add_argument('--lang=en_US') 
+    #chrome_options .add_argument("--disable-gpu")
+    #chrome_options .add_argument("--no-sandbox")
+    #chrome_options.add_argument('--log-level=0')
+    #chrome_options.add_argument('--enable-logging')
+    #chrome_options.add_argument('--single-process')
     chrome_options.add_argument('--ignore-certificate-errors')
     chrome_options.add_argument('--window-size=1280x1696')
     chrome_options.headless = True
@@ -146,13 +129,13 @@ def selectCardsScrapTF(): # Opens webpage with selenium and selects all the card
         return 0.0
 
     # Load page and cookies
-    cookies = load_cookies("/home/pablo/scrap.tf-profit-checker/cookies.pkl")
+    cookies = load_cookies("cookies.pkl")
     driver.get("https://scrap.tf/")
     for cookie in cookies:
         driver.add_cookie(cookie)
     driver.get("https://scrap.tf/cards/36")
     #pickle.dump( driver.get_cookies() , open("cookies.pkl","wb")) # Dumps cookies
-
+    '''
     # Try to find the html thing, no idea why it fails sometimes.
     try:
         elem = driver.find_element_by_id('category-0')
@@ -167,7 +150,7 @@ def selectCardsScrapTF(): # Opens webpage with selenium and selects all the card
         if card[4] < 0.03:
             continue
         try:
-            cardHtml = elem.find_element_by_xpath("//*[@data-id='" + card[3]  +   "']")
+            cardHtml = elem.find_element_by_xpath('//*[@data-id="' + card[3]  +   '"]')
         except:
             continue
         print(card)
@@ -187,17 +170,7 @@ def selectCardsScrapTF(): # Opens webpage with selenium and selects all the card
     print("DONE!: " + current_time)
     print("Estimated profit: " + str(round(estimatedProfit, 2)))
 
-    # Login to steam if needed
-    if steam_client.is_session_alive() == False:
-        try:
-            steam_client.login('metal079', 'pablo145965', '/home/pablo/scrap.tf-profit-checker/Steamguard.txt')
-        except:
-            print("TOO MANY LOGINS, will cooldown a bit")
-            time.sleep(3600)
-            return 0.0
-
     # Press submit button
-    time.sleep(3)
     python_button = driver.find_elements_by_xpath("//*[@data-original-title='Pay with metal and keys automatically' and @id='trade-btn']")[0]
     try:
         python_button.click()
@@ -205,40 +178,10 @@ def selectCardsScrapTF(): # Opens webpage with selenium and selects all the card
         print("Button press error, will skip loop")
         return 0.0
     print("Pressed submit button")
-
-    # accept trade
-    waitTime = 0
-    params = {'key': '7E0353421C674E0ACC5BADB7A74F9272'}
-    while True:
-        print("Waiting on trade...")
-        time.sleep(30)
-        waitTime += 1
-        if steam_client.is_session_alive() == False:
-            try:
-                steam_client.login('metal079', 'pablo145965', '/home/pablo/scrap.tf-profit-checker/Steamguard.txt')
-            except:
-                print("TOO MANY LOGINS, will cooldown a bit")
-                time.sleep(3600)
-                return 0.0
-        try:
-            TradeOffers =  steam_client.get_trade_offers(True)
-        except:
-            print("Some error getting trade offers")
-            return 0.0
-        if TradeOffers['response']['trade_offers_received']:
-            tradeOfferId = TradeOffers['response']['trade_offers_received'][0]['tradeofferid']
-            print("Attempting to accept trade...")
-            try:
-                response = steam_client.accept_trade_offer(tradeOfferId)
-                print("Accepted Trade!")
-                break
-            except:
-                pass
-        if waitTime == 15:
-            print("Timed out waiting for trade")
-            return 0.0
+    
+    time.sleep(20)
     driver.quit()
-    return estimatedProfit
+    return round(estimatedProfit, 2)
 
 def getAppID(cardGame, cardExel): # Get's AppId of game
     try:
@@ -248,100 +191,59 @@ def getAppID(cardGame, cardExel): # Get's AppId of game
     appID = cardExel["AppId"][nameIndex] # Get the appId
     return str(appID)
 
-def getSpecificPrice(card, appID, soup, mostProfitableList): # Gets current price of a card
+def getSpecificPrice(card, mostProfitableList, price_list): # Gets current price of a card
     cardName = card[0]
-    if appID == None:
-        return 0.0
-    try:
-        cardName = urllib.parse.quote(cardName)
-    except:
-        pass
-
-    if soup == None:
-        URL_base = "https://www.steamcardexchange.net/index.php?gamepage-appid-"
-        URL_full = URL_base + appID
-        page = ProxyRequests(URL_full)
-        try:
-            page.get()
-        except:
-            return None
-        soup = BeautifulSoup(page.rdata['request'], 'html.parser')
-    mydivs = soup.find_all("div", {"class": "element-button"})
-
-    # Organize price
-    price = 0
-    for thing in mydivs:
-        if thing.contents[0].attrs['href'].rfind(cardName) == -1:
-            continue
-        else:
-            price = thing.text
-            index = price.rfind('Price:') + 8
-            price = price[index:]
-            break
-    try:
-        price = float(price)
-    except ValueError:
-        try:
-            for thing in mydivs:
-                if thing.contents[0].attrs['href'].rfind(cardName) == -1:
-                    continue
-                else:
-                    price = thing.text
-                    index = price.rfind('$')
-                    price = price[index:]
-                    break
-            price = float(price)
-        except:
-            print("Soemthing broke in this thread")
-            exit()
-
-    fee = calculateFee(price)
-    profit = calculateProfit(price, fee, float(card[1]))
-
     lock = threading.Lock()
+    if cardName in price_list:
+        current_lowest_price = float(price_list[cardName]['price'])
+    else:
+        try:
+            market_hash_name = scrapy.get_card_hash_name(cardName)
+            URL_base = "https://steamcommunity.com/market/priceoverview/?appid=753&market_hash_name="
+            URL_full = URL_base + market_hash_name
+            page = requests.get(URL_full)
+            json_page = json.loads(page.content)
+            current_lowest_price = float(json_page['lowest_price'][1:])
+
+            with lock:
+                with open("price_list.txt", 'a', encoding="utf-8") as file_in:
+                    file_in.write('{' + str(current_lowest_price) + ';')
+                    file_in.write(cardName + ';')
+                    file_in.write(market_hash_name + ';')
+                    file_in.write(datetime.today().strftime('%Y-%m-%d') + '}')
+                    file_in.write('\n')
+                    file_in.write('\n')
+
+        except IndexError:
+            current_lowest_price = 0.0
+        
+        #Too many requests
+        except TypeError: 
+            current_lowest_price = 0.0
+
+        except:
+            current_lowest_price = 0.0
+        
+    fee = calculateFee(current_lowest_price)
+    profit = calculateProfit(current_lowest_price, fee, float(card[1]))
+
     with lock:
         mostProfitableList.append(card)
     index = mostProfitable.index(card)
     mostProfitableList[index][4] = profit
+    with lock:
+        try:
+            log.write("card: " + cardName + "---")
+            log.write("price: " + str(current_lowest_price) + '---')
+            log.write("hash_name: " + market_hash_name + '---')
+            log.write("URL: " + URL_full + '---')
+            log.write("appID: " + card[2])
+            log.write("\n")
+        except UnicodeEncodeError:
+            return
 
-def getSpecificPriceNew(driver, card, appID, soup, mostProfitableList):
-    cardName = card[0]
-
-    if appID == None:
-        return 0.0
-    try:
-        cardName = urllib.parse.quote(cardName)
-    except:
-        pass
-
-    if soup == None:
-        URL_base = "https://www.steamcardexchange.net/index.php?gamepage-appid-"
-        URL_full = URL_base + appID
-        driver.get(URL_full)
-
-        page_source = driver.page_source
-        soup = BeautifulSoup(page_source, 'html.parser')
-    mydivs = soup.find_all("div", {"class": "element-button"})
-
-    # Organize price
-    price = 0
-    for thing in mydivs:
-        if thing.contents[0].attrs['href'].rfind(cardName) == -1:
-            continue
-        else:
-            price = thing.text
-            index = price.rfind('Price') + 8
-            price = price[index:]
-            break
-    driver.quit()
-    price = float(price)
-
-    fee = calculateFee(price)
-    profit = calculateProfit(price, fee, float(card[1]))
-
-    mostProfitableList.append(card)
-    index = mostProfitable.index(card)
-    mostProfitableList[index][4] = profit
+        except UnboundLocalError:
+            return
 
 def save_cookies(requests_cookiejar, filename):
     with open(filename, 'wb') as f:
@@ -351,36 +253,141 @@ def load_cookies(filename):
     with open(filename, 'rb') as f:
         return pickle.load(f)
 
+# load card data from text file and save to dictionary
+def load_price_list(price_list):
+    with open(price_list) as file_in:
+        lines = {}
+        for line in file_in:
+            if line == '\n':
+                continue
+            index1 = line.find('{') 
+            index2 = line.find(';') 
+            price = line[index1 + 1:index2]
+
+            index1 = line.find(';', index2) 
+            index2 = line.find(';', index1 + 1) 
+            card_name = line[index1 + 1:index2]
+
+            index1 = line.find(';', index2) 
+            index2 = line.find(';', index1 + 1) 
+            market_hash_name = line[index1 + 1:index2]
+
+            index1 = line.find(';', index2) 
+            index2 = line.find('}') 
+            last_updated = line[index1 + 1:index2]
+
+            card_info = {"price": price,
+                        "card_name": card_name,
+                        "market_hash_name": market_hash_name,
+                        "last_updated": last_updated,}
+            
+            lines[card_name] = card_info
+    
+    return lines
+
+def load_inventory(file):
+    with open(file, 'r', encoding="utf-8") as file_in:
+        lines = {}
+        for line in file_in:
+            if line == '\n':
+                continue
+            index1 = line.find('{') 
+            index2 = line.find(';') 
+            card_name = line[index1 + 12:index2]
+
+            index1 = line.find(';', index2) 
+            index2 = line.find(';', index1 + 1) 
+            internal_name = line[index1 + 17:index2]
+
+            card_info = {"card_name": card_name,
+                        "internal_name": internal_name}
+            
+            lines[card_name] = card_info
+    
+    return lines
+
+class MyClient(steam.Client):
+    async def connect(self):  # on_events in a subclassed client don't need the @client.event decorator
+        print("------------")
+        print("Logged in as")
+        print("Username:", self.user)
+        print("ID:", self.user.id64)
+        print("Friends:", len(self.user.friends))
+        print("------------")
+        user = await SteamID.from_url("https://steamcommunity.com/id/tf2scrap36")
+        user = user.id64
+        user = await scrapy.fetch_user(76561198121097365)
+        self.inventory = await user.inventory(steam.STEAM)
+        with open("scrapy_inventory.txt", 'w', encoding="utf-8") as file_in:
+            for item in self.inventory.items:
+                # Write card name and internal names
+                file_in.write('{Card_name: ' + item.display_name + '; ')
+                file_in.write("Internal_name: " + item.tags[1]['internal_name'][4:] + '}')
+                file_in.write('\n')
+                file_in.write('\n')
+        print('got inventory')
+
+    # Search inventory of scrapy and return hash_name of provided card
+    def get_card_hash_name(self, cardName):
+        matches = self.inventory.filter_items(cardName)
+        hash_number = matches[0].tags[1]['internal_name']
+        hash_number = hash_number[4:]
+
+        hash_name = hash_number + "-" + quote(cardName)
+        return hash_name
+
+    async def on_trade_receive(self, trade: "steam.TradeOffer") -> None:
+        print(f"Received trade: #{trade.id}")
+        print("Trade partner is:", trade.partner)
+        print("We would send:", len(trade.items_to_send), "items")
+        print("We would receive:", len(trade.items_to_receive), "items")
+        await trade.accept()
+
 # Initial login to steam
-steam_client = SteamClient('7E0353421C674E0ACC5BADB7A74F9272')
-steam_client.login('metal079', 'pablo145965', '/home/pablo/scrap.tf-profit-checker/Steamguard.txt')
+scrapy = MyClient()
+scrapy.run("metalyorkie", "0hBhG2ZtPK4O", ) #shared_secret="vaOhCJKJzWiu3oTRUbG+cCo5eOk=" metal079
 total_profit = 0.0 # Initial profit is 0
+#inventory = load_inventory('scrapy_inventory')
 while(True):
     # get raw data of scrap.tf card page
     url = "https://scrap.tf/cards/36"
     keyPrice = getKeyPrice()
     print("Current Key Price: " + str(keyPrice))
 
-    # Organize cards into a string list called cards
-    scraper = cfscrape.create_scraper() 
+    # load page and get html info
+    chrome_options  = webdriver.ChromeOptions() 
+    #chrome_options.headless = True
+    chrome_options.add_argument("--disable-gpu")
+    chrome_options.add_argument("--no-sandbox")
+    chrome_options.add_argument('--ignore-certificate-errors')
+    chrome_options.add_argument('--window-size=1280x1696')
+    driver = webdriver.Chrome(options=chrome_options)
+    cookies = load_cookies("cookies.pkl")
+    driver.get("https://scrap.tf/")
+    for cookie in cookies:
+        driver.add_cookie(cookie)
+    driver.get("https://scrap.tf/cards/36")
+    time.sleep(10)
+    page = driver.page_source
+    
+    # Organize cards
     rawCards = []
-    for i in range(0, 10):
-        page = scraper.get(url, cookies = load_cookies("/home/pablo/scrap.tf-profit-checker/request_cookies"))
-        soup = BeautifulSoup(page.text, 'html.parser')
-        cardHTML = soup.find(class_='items-container')
-        try:
-            for child in cardHTML.children:
-                if child == '\n':
-                    pass
-                else:
-                    rawCards.append(str(child))
-        except:
-            continue
-        break
+    soup = BeautifulSoup(page, 'html.parser')
+    cardHTML = soup.find(class_='items-container')
+    try:
+        for child in cardHTML.children:
+            if child == '\n':
+                pass
+            else:
+                rawCards.append(str(child))
+    except:
+        print("Error getting cards")
+        exit()
     print("The card list has {} objects".format(len(rawCards)))
     cards = OrganizeCardData(rawCards)
 
-    cardExel = pd.read_csv(r'/home/pablo/scrap.tf-profit-checker/STC_set_data.csv') # Read csv file with card prices
+    # Estimate card prices based on csv file and order list accordingly.
+    cardExel = pd.read_csv(r'STC_set_data.csv') # Read csv file with card prices
     soup = None
     for index, card in enumerate(cards): # calculate profit
         try:
@@ -392,25 +399,32 @@ while(True):
         card.append(profit)
     sortedCards = sorted(cards, key = lambda l:l[4]) # Sorts card list by most profitable
 
-    # Checking actual price of top 30 cards using steamCards website
+    # Create new list using only the top priced N cards
+    '''
     sortedCards.reverse()
     top30 = []
-    if len(sortedCards) < 50: # If we have less than 50 cards retry loop
+    if len(sortedCards) < 100: # If we have less than 50 cards retry loop
         continue
-    for index in range(0,50):
+    for index in range(0, 100):
         top30.append(sortedCards[index])
-    mostProfitable = []
+    '''
 
+    # Create threads that check current price of cards using steam api
+    mostProfitable = []
     time_start = time.time()
-    i = 0
     threads = []
-    while i < 50:
-        price_request = threading.Thread(target=getSpecificPrice, args=(top30[i], top30[i][2], soup, mostProfitable))
+    log = open("thread_debug_log.txt", "w")
+    log.write("-------")
+    log.close()
+    log = open("thread_debug_log.txt", "a", encoding="utf-8")
+    price_list = load_price_list("price_list.txt")
+    for index, card in enumerate(sortedCards):
+        price_request = threading.Thread(target=getSpecificPrice, args=(card, mostProfitable, price_list))
         price_request.start()
         threads.append(price_request)
-        i += 1
     for thread in threads:
         thread.join(timeout=None)
+    log.close()
 
     mostProfitable = sorted(mostProfitable, key = lambda l:l[4]) # Sorts card list by most profitable
 
@@ -418,12 +432,13 @@ while(True):
     time_end = time.time()
     print("Total Time: " + str((time_end - time_start)))
     
-    #for index, card in enumerate(mostProfitable):
-        #print(str(index) + ': ' + str(card))
+    for index, card in enumerate(mostProfitable):
+        if card[4] >= 0.0:
+            print(str(index) + ': ' + str(card))
 
     # Select and buy cards
     mostProfitable.reverse()
-    total_profit += selectCardsScrapTF()
+    total_profit += selectCardsScrapTF(driver)
 
     print("Done with cycle!\n")
     print("Total profit so far: " + str(total_profit))
