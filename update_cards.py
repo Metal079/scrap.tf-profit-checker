@@ -1,21 +1,38 @@
 from datetime import datetime
+from typing import OrderedDict
 import requests
 import json
-import threading
 import time
+from urllib.parse import quote
+
 
 def main():
     cards = load_price_list('price_list.txt')
     today = datetime.today().strftime('%Y-%m-%d')
+    cards = organize_price_list(cards)
+    time_start = time.time()
     for card in cards:
-        if cards[card]['last_updated'] != today:
-            index = cards[card]['index']
+        if card[1]['last_updated'] == today:
+            continue
+        elif card[1]['price'] == '0.0':
+            continue
+        else:
+            index = card[1]['index']
             update_card(cards, card, index)
-            time.sleep(10)
+            time_end = time.time()
+            time.sleep(90)
+            if time_end - time_start > 3600:
+                print("Update card program has exited")
+                exit()
+
+def getMarketHashName(cardName, hash_number):
+    name_hash = quote(cardName)
+    name_hash = name_hash.replace('/', '-')
+    return hash_number + "-" + name_hash
 
 # load card data from text file and save to dictionary
 def load_price_list(price_list):
-    with open(price_list) as file_in:
+    with open(price_list, 'r', encoding="utf-8") as file_in:
         global data
         data = file_in.readlines()
         lines = {}
@@ -40,39 +57,61 @@ def load_price_list(price_list):
             index2 = line.find('}') 
             last_updated = line[index1 + 1:index2]
 
+            if market_hash_name.find('-') == -1:
+                market_hash_name = getMarketHashName(card_name, market_hash_name)
+
             card_info = {"price": price,
                         "card_name": card_name,
                         "market_hash_name": market_hash_name,
                         "last_updated": last_updated,
                         "index": index}
             
-            lines[card_name] = card_info
+            lines[market_hash_name] = card_info
     
     return lines
 
+# Reorders price_list to have most out of date cards listed first.
+# TODO
+def organize_price_list(cards):
+    sorted_cards = sorted(cards.items(), key=lambda k_v: k_v[1]['last_updated'])
+    return sorted_cards
+
+
 # Updates cards file with new price and last_updated date
 def update_card(cards, card, index):
-    market_hash_name = cards[card]['market_hash_name']
+    market_hash_name = card[1]['market_hash_name']
     URL_base = "https://steamcommunity.com/market/priceoverview/?appid=753&market_hash_name="
     URL_full = URL_base + market_hash_name
     page = requests.get(URL_full)
-    json_page = json.loads(page.content)
-    try:
-        current_lowest_price = float(json_page['lowest_price'][1:])
-
+    
     # Returned null due to asking too often, sleep for an hour
-    except TypeError:
+    if page.status_code == 500 or page.status_code == 502:
+        print(f"ERROR CODE {page.status_code}, unknown error")
+        print(URL_full)
+        print(card[1]['card_name'])
+        print(card[1]['market_hash_name'])
+        print('\n')
+        return
+
+    elif page.status_code != 200:
+        print(f"ERROR CODE {page.status_code}")
         time.sleep(3700)
         return
 
-    lock = threading.Lock()
-    with lock:
-        with open("price_list.txt", 'w', encoding="utf-8") as file_in:
-            data[index] = '{' + str(current_lowest_price) + ';'
-            data[index] += card + ';'
-            data[index] += market_hash_name + ';'
-            data[index] += datetime.today().strftime('%Y-%m-%d') + '}'
-            data[index] += '\n'
-            file_in.writelines(data)
+    json_page = json.loads(page.content)
+    try:
+        current_lowest_price = float(json_page['lowest_price'][1:])
+    except KeyError:
+        print("Empty json")
+        return
 
-main()
+    with open("price_list.txt", 'w', encoding="utf-8") as file_in:
+        data[index] = '{' + str(current_lowest_price) + ';'
+        data[index] += card[1]['card_name'] + ';'
+        data[index] += market_hash_name + ';'
+        data[index] += datetime.today().strftime('%Y-%m-%d') + '}'
+        data[index] += '\n'
+        file_in.writelines(data)
+        print("Updated " + card[0] + " from " + card[1]['last_updated'] + " to " + datetime.today().strftime('%Y-%m-%d'))
+
+main() 
