@@ -9,13 +9,12 @@ import threading
 from datetime import datetime
 import requests # Gets webpages
 from bs4 import BeautifulSoup # Used for website scraping
-import pandas as pd # csv file reading
 from selenium import webdriver # Potential use for buying cards from scrap.tf
-import chromedriver_binary
-from proxy_requests import ProxyRequests
-import steam
-from steam.abc import SteamID
+#import steam
+#from steam.abc import SteamID
+import update_cards
 
+from steampy.client import SteamClient
 
 def OrganizeCardData(cards): # Organizes cards in list in format CARDTITLE, CARDPRICE(in refined), CARDGAMENAME
     organizedCards = [[]]
@@ -146,6 +145,18 @@ def selectCardsScrapTF(driver): # Opens webpage with selenium and selects all th
     print("DONE!: " + current_time)
     print("Estimated profit: " + str(round(estimatedProfit, 2)))
 
+    # Login to steam if needed
+    try:
+        if steam_client.is_session_alive() == False:
+            try:
+                steam_client.login('metal079', 'pablo145965', '/home/pi/scrap.tf-profit-checker/Steamguard.txt')
+            except:
+                print("TOO MANY LOGINS, will cooldown a bit")
+                driver.quit()
+                return 0.0
+    except:
+        steam_client.login('metal079', 'pablo145965', '/home/pi/scrap.tf-profit-checker/Steamguard.txt')
+
     # Press submit button
     python_button = driver.find_elements_by_xpath("//*[@data-original-title='Pay with metal and keys automatically' and @id='trade-btn']")[0]
     try:
@@ -154,6 +165,40 @@ def selectCardsScrapTF(driver): # Opens webpage with selenium and selects all th
         print("Button press error, will skip loop")
         return 0.0
     print("Pressed submit button")
+
+    # accept trade
+    waitTime = 0
+    while True:
+        print("Waiting on trade...")
+        time.sleep(30)
+        waitTime += 1
+        if steam_client.is_session_alive() == False:
+            try:
+                steam_client.login('metal079', 'pablo145965', '/home/pi/scrap.tf-profit-checker/Steamguard.txt')
+            except:
+                print("TOO MANY LOGINS, will cooldown a bit")
+                driver.quit()
+                time.sleep(3600)
+                return 0.0
+        try:
+            TradeOffers =  steam_client.get_trade_offers(True)
+        except:
+            print("Some error getting trade offers")
+            driver.quit()
+            return 0.0
+        if TradeOffers['response']['trade_offers_received']:
+            tradeOfferId = TradeOffers['response']['trade_offers_received'][0]['tradeofferid']
+            print("Attempting to accept trade...")
+            try:
+                response = steam_client.accept_trade_offer(tradeOfferId)
+                print("Accepted Trade!")
+                break
+            except:
+                pass
+        if waitTime == 15:
+            print("Timed out waiting for trade")
+            driver.quit()
+            return 0.0
     
     time.sleep(20)
     driver.quit()
@@ -190,7 +235,7 @@ def getSpecificPrice(card, mostProfitableList, price_list): # Gets current price
                 time.sleep(10)
                 if page.status_code != 200:
                     print(f"ERROR CODE {page.status_code}")
-                    with open("thread_debug_log.txt", "a", encoding="utf-8") as file_in:
+                    with open("/home/pi/scrap.tf-profit-checker/thread_debug_log.txt", "a", encoding="utf-8") as file_in:
                         file_in.write(f"ERROR CODE {page.status_code};")
                         file_in.write(" card: " + cardName + ";")
                         file_in.write(" appID: " + card[2] + ";")
@@ -205,7 +250,7 @@ def getSpecificPrice(card, mostProfitableList, price_list): # Gets current price
                 else:
                     current_lowest_price = 0.0
 
-                with open("price_list.txt", 'a', encoding="utf-8") as file_in:
+                with open("/home/pi/scrap.tf-profit-checker/price_list.txt", 'a', encoding="utf-8") as file_in:
                     file_in.write('{' + str(current_lowest_price) + ';')
                     file_in.write(cardName + ';')
                     file_in.write(market_hash_name + ';')
@@ -306,51 +351,13 @@ def update_inventory(inventory):
                 file_in.write('\n')
                 file_in.write('\n')
 
-class MyClient(steam.Client):
-    async def connect(self):  # on_events in a subclassed client don't need the @client.event decorator
-        print("------------")
-        print("Logged in as")
-        print("Username:", self.user)
-        print("ID:", self.user.id64)
-        print("Friends:", len(self.user.friends))
-        print("------------")
-        user = await SteamID.from_url("https://steamcommunity.com/id/tf2scrap36")
-        user = user.id64
-        user = await self.fetch_user(76561198121097365)
-        self.inventory = await user.inventory(steam.STEAM)
-        update_inventory()
-        '''
-        with open("scrapy_inventory.txt", 'w', encoding="utf-8") as file_in:
-            for item in self.inventory.items:
-                # Write card name and internal names
-                file_in.write('{Card_name: ' + item.display_name + '; ')
-                file_in.write("Internal_name: " + item.tags[1]['internal_name'][4:] + '}')
-                file_in.write('\n')
-                file_in.write('\n')
-        '''
-        print('got inventory')
-
-    # Search inventory of scrapy and return hash_name of provided card
-    def get_card_hash_name(self, cardName):
-        matches = self.inventory.filter_items(cardName)
-        hash_number = matches[0].tags[1]['internal_name']
-        hash_number = hash_number[4:]
-
-        hash_name = hash_number + "-" + quote(cardName)
-        return hash_name
-
-    async def on_trade_receive(self, trade: "steam.TradeOffer") -> None:
-        print(f"Received trade: #{trade.id}")
-        print("Trade partner is:", trade.partner)
-        print("We would send:", len(trade.items_to_send), "items")
-        print("We would receive:", len(trade.items_to_receive), "items")
-        await trade.accept()
-
 # Initial login to steam
 total_profit = 0.0 # Initial profit is 0
-subprocess.Popen(['python', 'test_scraptf_inv.py'])
+#subprocess.Popen(['python3', 'test_scraptf_inv.py'])
+steam_client = SteamClient('7E0353421C674E0ACC5BADB7A74F9272')
+steam_client.login(r'metal079', r'pablo145965', r'/home/pi/scrap.tf-profit-checker/Steamguard.txt')
 while(True):
-    price_list = load_price_list("price_list.txt")
+    price_list = load_price_list("/home/pi/scrap.tf-profit-checker/price_list.txt")
 
     # get raw data of scrap.tf card page
     url = "https://scrap.tf/cards/36"
@@ -364,14 +371,20 @@ while(True):
     chrome_options.add_argument("--no-sandbox")
     chrome_options.add_argument('--ignore-certificate-errors')
     chrome_options.add_argument('--window-size=1280x1696')
-    chrome_options.add_argument('start-minimized')
-    driver = webdriver.Chrome(options=chrome_options)
-    cookies = load_cookies("cookies.pkl")
+    chrome_options.add_argument("start-maximized")
+    chrome_options.add_experimental_option("excludeSwitches", ["enable-automation"])
+    chrome_options.add_experimental_option('useAutomationExtension', False)
+    chrome_options.add_argument("--disable-blink-features=AutomationControlled")
+    chrome_options.add_argument("user-agent=Mozilla/5.0 (Windows NT 6.1; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/84.0.4147.125 Safari/537.36")
+    driver = webdriver.Chrome('/usr/lib/chromium-browser/chromedriver', options=chrome_options)
+    #driver = webdriver.Chrome(options=chrome_options)
+    cookies = load_cookies("/home/pi/scrap.tf-profit-checker/cookies.pkl")
     driver.get("https://scrap.tf/")
     #pickle.dump( driver.get_cookies() , open("yorkie_cookies.pkl","wb")) # Dumps cookies
     for cookie in cookies:
         driver.add_cookie(cookie)
     driver.get("https://scrap.tf/cards/36")
+    time.sleep(20)
     page = driver.page_source
     
     # Organize cards
@@ -387,9 +400,8 @@ while(True):
     except:
         print("Error getting cards")
         driver.quit()
-        subprocess.call(['python', 'update_cards.py'])
-        time.sleep(1800)
-        continue
+        update_cards.update_price_list()
+
     print("The card list has {} objects".format(len(rawCards)))
     cards = OrganizeCardData(rawCards)
 
@@ -405,8 +417,7 @@ while(True):
         threads.append(price_request)
     for thread in threads:
         time_end = time.time()
-        if time_end - time_start > 300:
-            print("Thread timeout")
+        if time_end - time_start > 300: # Timeout after 5 mins
             kill_threads = True
         thread.join(timeout=60.0)
     mostProfitable = sorted(mostProfitable, key = lambda l:l[4]) # Sorts card list by most profitable
@@ -415,9 +426,9 @@ while(True):
     time_end = time.time()
     print("Total Time: " + str((time_end - time_start)))
     
-    
+    # Print list of eligible cards to buy
     for index, card in enumerate(mostProfitable):
-        if card[4] >= 0.01:
+        if card[4] >= 0.02:
             print(str(index) + ': ' + str(card))
     
 
@@ -427,4 +438,5 @@ while(True):
 
     print("Done with cycle!")
     print("Total profit so far: " + str(total_profit) + '\n')
-    subprocess.call(['python', 'update_cards.py'])
+    #subprocess.call(['python3', 'update_cards.py'])
+    update_cards.update_price_list()
