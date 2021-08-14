@@ -6,8 +6,8 @@ import time
 from urllib.parse import quote
 
 
-def main():
-    cards = load_price_list('price_list.txt')
+def update_price_list():
+    cards = load_price_list('/home/pi/scrap.tf-profit-checker/price_list.txt')
     today = datetime.today().strftime('%Y-%m-%d')
     cards = organize_price_list(cards)
     time_start = time.time()
@@ -21,7 +21,7 @@ def main():
             update_card(cards, card, index)
             time_end = time.time()
             time.sleep(90)
-            if time_end - time_start > 3600:
+            if time_end - time_start > 2700:
                 print("Update card program has exited")
                 exit()
 
@@ -95,8 +95,7 @@ def update_card(cards, card, index):
 
     elif page.status_code != 200:
         print(f"ERROR CODE {page.status_code}")
-        time.sleep(3700)
-        return
+        exit()
 
     json_page = json.loads(page.content)
     try:
@@ -105,7 +104,7 @@ def update_card(cards, card, index):
         print("Empty json")
         return
 
-    with open("price_list.txt", 'w', encoding="utf-8") as file_in:
+    with open("/home/pi/scrap.tf-profit-checker/price_list.txt", 'w', encoding="utf-8") as file_in:
         data[index] = '{' + str(current_lowest_price) + ';'
         data[index] += card[1]['card_name'] + ';'
         data[index] += market_hash_name + ';'
@@ -114,4 +113,3 @@ def update_card(cards, card, index):
         file_in.writelines(data)
         print("Updated " + card[0] + " from " + card[1]['last_updated'] + " to " + datetime.today().strftime('%Y-%m-%d'))
 
-main() 
